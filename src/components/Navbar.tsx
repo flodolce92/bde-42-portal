@@ -3,11 +3,13 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useTheme } from '@/hooks/useTheme';
+import { useAppStore } from '@/store';
 
 type TeamType = 'acqua' | 'fuoco' | 'erba';
 
 export default function Navbar() {
   const { theme, changeTheme } = useTheme();
+  const { currentUser } = useAppStore();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   const handleThemeChange = (newTheme: TeamType) => {
@@ -82,38 +84,46 @@ export default function Navbar() {
     <nav className={`fixed w-full top-0 z-50 border-b ${getNavbarStyle()}`}>
       {getThemeDecorations()}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
+        <div className="flex justify-between h-20">
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
-              <Link href="/" className="font-bold text-xl">
+              <Link href="/" className="font-bold text-3xl">
                 <span className="font-black">42</span> BDE Portal
               </Link>
             </div>
-            <div className="hidden sm:ml-8 sm:flex sm:space-x-6 items-center">
+            <div className="hidden sm:ml-10 sm:flex sm:space-x-6 items-center">
               <Link 
                 href="/dashboard" 
-                className="px-3 py-2 text-sm font-medium border-b-2 border-transparent hover:border-white text-white"
+                className="px-4 py-2 text-lg font-medium border-b-2 border-transparent hover:border-white text-white"
               >
                 Dashboard
               </Link>
               <Link 
                 href="/eventi" 
-                className="px-3 py-2 text-sm font-medium border-b-2 border-transparent hover:border-white text-white"
+                className="px-4 py-2 text-lg font-medium border-b-2 border-transparent hover:border-white text-white"
               >
                 Eventi
               </Link>
               <Link 
                 href="/club" 
-                className="px-3 py-2 text-sm font-medium border-b-2 border-transparent hover:border-white text-white"
+                className="px-4 py-2 text-lg font-medium border-b-2 border-transparent hover:border-white text-white"
               >
                 Club
               </Link>
               <Link 
                 href="/classifica" 
-                className="px-3 py-2 text-sm font-medium border-b-2 border-transparent hover:border-white text-white"
+                className="px-4 py-2 text-lg font-medium border-b-2 border-transparent hover:border-white text-white"
               >
                 Classifica
               </Link>
+              {currentUser?.isAdmin && (
+                <Link 
+                  href="/admin" 
+                  className="px-4 py-2 text-lg font-medium border-b-2 border-transparent hover:border-white text-white"
+                >
+                  Admin
+                </Link>
+              )}
             </div>
           </div>
           <div className="flex items-center">
@@ -122,7 +132,7 @@ export default function Navbar() {
               <div className="flex space-x-2">
                 <button 
                   onClick={() => handleThemeChange('acqua')}
-                  className={`relative w-8 h-8 rounded-full transition-all duration-200 ${
+                  className={`relative w-10 h-10 rounded-full transition-all duration-200 ${
                     theme === 'acqua' ? 'ring-2 ring-white scale-110' : 'opacity-70 hover:opacity-100'
                   }`}
                   aria-label="Team Acqua"
@@ -138,7 +148,7 @@ export default function Navbar() {
                 </button>
                 <button 
                   onClick={() => handleThemeChange('fuoco')}
-                  className={`relative w-8 h-8 rounded-full transition-all duration-200 ${
+                  className={`relative w-10 h-10 rounded-full transition-all duration-200 ${
                     theme === 'fuoco' ? 'ring-2 ring-white scale-110' : 'opacity-70 hover:opacity-100'
                   }`}
                   aria-label="Team Fuoco"
@@ -154,7 +164,7 @@ export default function Navbar() {
                 </button>
                 <button 
                   onClick={() => handleThemeChange('erba')}
-                  className={`relative w-8 h-8 rounded-full transition-all duration-200 ${
+                  className={`relative w-10 h-10 rounded-full transition-all duration-200 ${
                     theme === 'erba' ? 'ring-2 ring-white scale-110' : 'opacity-70 hover:opacity-100'
                   }`}
                   aria-label="Team Erba"
@@ -173,7 +183,12 @@ export default function Navbar() {
             
             {/* Avatar utente */}
             <div className="ml-4 flex items-center">
-              <div className="h-8 w-8 rounded-full bg-white bg-opacity-20 flex items-center justify-center text-white font-bold">
+              <div className={`h-10 w-10 rounded-full ${
+                theme === 'acqua' ? 'bg-sky-700' : 
+                theme === 'erba' ? 'bg-green-700' : 
+                theme === 'fuoco' ? 'bg-red-700' : 
+                'bg-slate-700'
+              } flex items-center justify-center text-white font-bold`}>
                 U
               </div>
             </div>
@@ -233,6 +248,15 @@ export default function Navbar() {
           >
             Classifica
           </Link>
+          {currentUser?.isAdmin && (
+            <Link 
+              href="/admin"
+              className="block pl-3 pr-4 py-2 border-l-4 text-base font-medium border-transparent text-white hover:bg-white hover:bg-opacity-10 hover:border-white"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Admin
+            </Link>
+          )}
         </div>
       </div>
       

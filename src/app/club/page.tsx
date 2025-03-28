@@ -144,26 +144,31 @@ export default function ClubPage() {
   return (
     <div className={`min-h-screen ${styles.mainGradient} pt-8 pb-16`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h1 className={`text-4xl font-bold mb-4 ${styles.textColor}`}>I Nostri Club</h1>
-          <p className={`text-xl max-w-3xl mx-auto ${styles.textMuted}`}>
+        <div className="mb-8">
+          <h1 className={`text-3xl font-bold mb-2 ${styles.textColor}`}>I Nostri Club</h1>
+          <p className={`${styles.textMuted}`}>
             Scopri la nostra offerta di club tematici e trova quello più adatto ai tuoi interessi
           </p>
         </div>
         
         {/* Menu di navigazione dei club */}
-        <div className="mb-8 flex flex-wrap justify-center gap-2">
-          {clubsData.map((club) => (
-            <button
-              key={club.id}
-              onClick={() => setSelectedClub(club)}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                selectedClub.id === club.id ? styles.activeTab : styles.inactiveTab
-              }`}
-            >
-              {club.name}
-            </button>
-          ))}
+        <div className={`${styles.cardBg} rounded-lg shadow-md p-6 mb-8 border ${styles.border}`}>
+          <div>
+            <h3 className={`text-sm font-medium ${styles.textColor} mb-3`}>Seleziona un club</h3>
+            <div className="flex flex-wrap gap-2">
+              {clubsData.map((club) => (
+                <button
+                  key={club.id}
+                  onClick={() => setSelectedClub(club)}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    selectedClub.id === club.id ? styles.activeTab : styles.inactiveTab
+                  }`}
+                >
+                  {club.name}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
         
         {/* Dettagli del club selezionato */}
@@ -203,7 +208,7 @@ export default function ClubPage() {
                 
                 <Link 
                   href={`/club/${selectedClub.id}`}
-                  className={`inline-block px-6 py-3 rounded-lg font-medium ${styles.secondaryButton}`}
+                  className={`inline-block px-6 py-3 rounded-lg font-medium ${styles.button}`}
                 >
                   Visualizza calendario completo
                 </Link>

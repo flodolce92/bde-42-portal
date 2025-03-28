@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useTheme } from '@/hooks/useTheme';
 
 export interface EventProps {
   id: string;
@@ -28,6 +29,7 @@ export default function EventCard({
   isRegistered = false
 }: EventProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const { theme } = useTheme();
   
   // Determina se dovremmo usare il tema scuro basato sulla preferenza del sistema
   const isDarkMode = () => {
@@ -102,17 +104,65 @@ export default function EventCard({
   // Controlla se siamo in modalità scura
   const darkMode = isDarkMode();
   
+  // Ottieni il colore di highlight in base al tema
+  const getTeamHoverColor = () => {
+    switch(theme) {
+      case 'acqua':
+        return 'hover:border-sky-600 group-hover:text-sky-500';
+      case 'fuoco':
+        return 'hover:border-red-600 group-hover:text-red-500';
+      case 'erba':
+        return 'hover:border-green-600 group-hover:text-green-500';
+      default:
+        return 'hover:border-sky-600 group-hover:text-sky-500';
+    }
+  };
+  
+  // Ottieni il colore di sfondo per il bottone in base al tema
+  const getTeamButtonColor = () => {
+    switch(theme) {
+      case 'acqua':
+        return 'bg-sky-600 hover:bg-sky-700';
+      case 'fuoco':
+        return 'bg-red-600 hover:bg-red-700';
+      case 'erba':
+        return 'bg-green-600 hover:bg-green-700';
+      default:
+        return 'bg-sky-600 hover:bg-sky-700';
+    }
+  };
+  
+  // Ottieni il colore per il bottone secondario in base al tema
+  const getTeamSecondaryButtonColor = () => {
+    switch(theme) {
+      case 'acqua':
+        return 'border-sky-500 text-sky-400 hover:bg-sky-900';
+      case 'fuoco':
+        return 'border-red-500 text-red-400 hover:bg-red-900';
+      case 'erba':
+        return 'border-green-500 text-green-400 hover:bg-green-900';
+      default:
+        return 'border-sky-500 text-sky-400 hover:bg-sky-900';
+    }
+  };
+  
+  const teamHoverColor = getTeamHoverColor();
+  const teamButtonColor = getTeamButtonColor();
+  const teamSecondaryButtonColor = getTeamSecondaryButtonColor();
+  
   return (
     <div 
       className={`${
         darkMode
-          ? 'bg-slate-800 border-slate-700 hover:border-indigo-600'
-          : 'bg-white hover:border-indigo-500'
+          ? 'bg-slate-800 border-slate-700'
+          : 'bg-white'
       } rounded-lg shadow-md overflow-hidden border ${
         isRegistered 
-          ? 'border-indigo-500 dark:border-indigo-600' 
+          ? `border-${theme === 'acqua' ? 'sky' : theme === 'erba' ? 'green' : 'red'}-500` 
           : 'border-gray-200 dark:border-slate-700'
-      } transition-all duration-300 hover:shadow-lg group`}
+      } transition-all duration-300 hover:shadow-lg group ${
+        darkMode ? teamHoverColor.split(' ')[0] : ''
+      }`}
     >
       {imageUrl ? (
         <div className="h-40 w-full overflow-hidden relative">
@@ -141,7 +191,7 @@ export default function EventCard({
       )}
       
       <div className="p-5">
-        <h3 className={`text-lg font-semibold mb-2 group-hover:text-indigo-500 transition-colors ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+        <h3 className={`text-lg font-semibold mb-2 transition-colors ${darkMode ? 'text-white' : 'text-gray-900'} ${teamHoverColor.split(' ')[1]}`}>
           {title}
         </h3>
         
@@ -167,7 +217,7 @@ export default function EventCard({
         {description.length > 100 && (
           <button 
             onClick={() => setIsExpanded(!isExpanded)}
-            className={`text-xs mb-4 hover:text-indigo-500 transition-colors ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}
+            className={`text-xs mb-4 transition-colors ${darkMode ? 'text-gray-400' : 'text-gray-600'} ${teamHoverColor.split(' ')[1].replace('group-hover:', 'hover:')}`}
           >
             {isExpanded ? 'Mostra meno' : 'Mostra di più'}
           </button>
@@ -178,8 +228,8 @@ export default function EventCard({
             href={`/eventi/${id}`}
             className={`px-4 py-2 rounded text-sm font-medium transition-colors ${
               darkMode 
-                ? 'bg-indigo-600 hover:bg-indigo-700 text-white' 
-                : 'bg-indigo-500 hover:bg-indigo-600 text-white'
+                ? `${teamButtonColor} text-white` 
+                : `${teamButtonColor} text-white`
             }`}
           >
             Dettagli
@@ -196,8 +246,10 @@ export default function EventCard({
             <button 
               className={`px-4 py-2 rounded text-sm font-medium border transition-colors ${
                 darkMode 
-                  ? 'border-indigo-500 text-indigo-400 hover:bg-indigo-900' 
-                  : 'border-indigo-500 text-indigo-600 hover:bg-indigo-50'
+                  ? teamSecondaryButtonColor
+                  : teamSecondaryButtonColor.replace('hover:bg-sky-900', 'hover:bg-sky-50')
+                     .replace('hover:bg-red-900', 'hover:bg-red-50')
+                     .replace('hover:bg-green-900', 'hover:bg-green-50')
               }`}
             >
               Iscriviti

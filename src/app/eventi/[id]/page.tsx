@@ -149,25 +149,25 @@ export default function EventDetail({ params }: { params: { id: string } }) {
     if (!isRegistered) {
       switch(theme) {
         case 'acqua':
-          return `${baseClasses} text-white ${darkMode ? 'bg-sky-700 hover:bg-sky-600' : 'bg-sky-500 hover:bg-sky-400'}`;
+          return `${baseClasses} text-white bg-sky-700 hover:bg-sky-600`;
         case 'erba':
-          return `${baseClasses} text-white ${darkMode ? 'bg-green-700 hover:bg-green-600' : 'bg-green-500 hover:bg-green-400'}`;
+          return `${baseClasses} text-white bg-green-700 hover:bg-green-600`;
         case 'fuoco':
-          return `${baseClasses} text-white ${darkMode ? 'bg-red-700 hover:bg-red-600' : 'bg-red-500 hover:bg-red-400'}`;
+          return `${baseClasses} text-white bg-red-700 hover:bg-red-600`;
         default:
-          return `${baseClasses} text-white ${darkMode ? 'bg-sky-700 hover:bg-sky-600' : 'bg-sky-500 hover:bg-sky-400'}`;
+          return `${baseClasses} text-white bg-sky-700 hover:bg-sky-600`;
       }
     }
     
-    return `${baseClasses} ${darkMode ? 'bg-gray-700 text-gray-200 hover:bg-gray-600' : 'bg-gray-200 text-gray-800 hover:bg-gray-300'}`;
+    return `${baseClasses} bg-gray-700 text-gray-200 hover:bg-gray-600`;
   };
   
   const getTeamColor = (team: string) => {
     switch (team) {
-      case 'acqua': return darkMode ? 'bg-sky-800' : 'bg-sky-500';
-      case 'erba': return darkMode ? 'bg-green-800' : 'bg-green-500';
-      case 'fuoco': return darkMode ? 'bg-red-800' : 'bg-red-500';
-      default: return darkMode ? 'bg-gray-700' : 'bg-gray-500';
+      case 'acqua': return 'bg-sky-700';
+      case 'erba': return 'bg-green-700';
+      case 'fuoco': return 'bg-red-700';
+      default: return 'bg-gray-700';
     }
   };
   
@@ -185,57 +185,21 @@ export default function EventDetail({ params }: { params: { id: string } }) {
     switch(theme) {
       case 'acqua':
         return {
-          bgGradient: darkMode 
-            ? 'bg-gradient-to-r from-sky-900 to-blue-900' 
-            : 'bg-gradient-to-r from-sky-400 to-blue-500',
-          textColor: 'text-white',
-          accentBg: darkMode ? 'bg-sky-800' : 'bg-sky-400',
-          cardBg: darkMode ? 'bg-slate-800' : 'bg-white',
-          textDefault: darkMode ? 'text-gray-200' : 'text-gray-800',
-          cardBorder: darkMode ? 'border-sky-700' : 'border-sky-200',
+          bgGradient: 'bg-gradient-to-r from-sky-950 via-blue-950 to-sky-900',
+          textColor: 'text-sky-100',
+          accentBg: 'bg-sky-800',
+          cardBg: 'bg-slate-900',
+          textDefault: 'text-gray-200',
+          textMuted: 'text-gray-400',
+          cardBorder: 'border-sky-800',
           decoration: (
             <div className="absolute right-0 bottom-0 w-32 h-32 opacity-20">
               <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                 <path d="M0,25 Q25,0 50,25 T100,25 T150,25" fill="none" stroke="white" strokeWidth="5">
                   <animate attributeName="d" dur="10s" repeatCount="indefinite" 
-                      values="M0,25 Q25,0 50,25 T100,25;
-                              M0,35 Q25,10 50,35 T100,35;
-                              M0,25 Q25,0 50,25 T100,25" />
-                </path>
-                <path d="M0,50 Q25,25 50,50 T100,50 T150,50" fill="none" stroke="white" strokeWidth="5">
-                  <animate attributeName="d" dur="10s" repeatCount="indefinite" 
-                      values="M0,50 Q25,25 50,50 T100,50;
-                              M0,60 Q25,35 50,60 T100,60;
-                              M0,50 Q25,25 50,50 T100,50" />
-                </path>
-                <path d="M0,75 Q25,50 50,75 T100,75 T150,75" fill="none" stroke="white" strokeWidth="5">
-                  <animate attributeName="d" dur="10s" repeatCount="indefinite" 
-                      values="M0,75 Q25,50 50,75 T100,75;
-                              M0,85 Q25,60 50,85 T100,85;
-                              M0,75 Q25,50 50,75 T100,75" />
-                </path>
-              </svg>
-            </div>
-          )
-        };
-      case 'fuoco':
-        return {
-          bgGradient: darkMode 
-            ? 'bg-gradient-to-r from-red-900 to-orange-900' 
-            : 'bg-gradient-to-r from-red-500 to-orange-500',
-          textColor: 'text-white',
-          accentBg: darkMode ? 'bg-red-800' : 'bg-red-400',
-          cardBg: darkMode ? 'bg-slate-800' : 'bg-white',
-          textDefault: darkMode ? 'text-gray-200' : 'text-gray-800',
-          cardBorder: darkMode ? 'border-red-700' : 'border-red-200',
-          decoration: (
-            <div className="absolute right-0 bottom-0 w-32 h-32 opacity-20">
-              <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <path d="M50,15 Q55,5 60,15 T70,15 T80,15 T90,25 T85,35 T90,45 T80,55 T90,65 T80,75 T70,85 T60,90 T50,95 T40,90 T30,85 T20,75 T10,65 T20,55 T10,45 T15,35 T10,25 T20,15 T30,15 T40,15 T50,15" fill="none" stroke="white" strokeWidth="2">
-                  <animate attributeName="d" dur="3s" repeatCount="indefinite" 
-                      values="M50,15 Q55,5 60,15 T70,15 T80,15 T90,25 T85,35 T90,45 T80,55 T90,65 T80,75 T70,85 T60,90 T50,95 T40,90 T30,85 T20,75 T10,65 T20,55 T10,45 T15,35 T10,25 T20,15 T30,15 T40,15 T50,15;
-                              M50,15 Q60,5 65,15 T75,20 T85,15 T95,25 T90,40 T95,45 T85,60 T95,65 T85,80 T75,90 T65,95 T50,100 T35,95 T25,90 T15,80 T5,65 T15,60 T5,45 T10,40 T5,25 T15,15 T25,20 T35,15 T50,15;
-                              M50,15 Q55,5 60,15 T70,15 T80,15 T90,25 T85,35 T90,45 T80,55 T90,65 T80,75 T70,85 T60,90 T50,95 T40,90 T30,85 T20,75 T10,65 T20,55 T10,45 T15,35 T10,25 T20,15 T30,15 T40,15 T50,15" />
+                    values="M0,25 Q25,0 50,25 T100,25;
+                            M0,25 Q25,50 50,25 T100,25;
+                            M0,25 Q25,0 50,25 T100,25" />
                 </path>
               </svg>
             </div>
@@ -243,40 +207,43 @@ export default function EventDetail({ params }: { params: { id: string } }) {
         };
       case 'erba':
         return {
-          bgGradient: darkMode 
-            ? 'bg-gradient-to-r from-green-900 to-emerald-900' 
-            : 'bg-gradient-to-r from-green-500 to-emerald-500',
-          textColor: 'text-white',
-          accentBg: darkMode ? 'bg-green-800' : 'bg-green-400',
-          cardBg: darkMode ? 'bg-slate-800' : 'bg-white',
-          textDefault: darkMode ? 'text-gray-200' : 'text-gray-800',
-          cardBorder: darkMode ? 'border-green-700' : 'border-green-200',
+          bgGradient: 'bg-gradient-to-r from-green-950 via-emerald-950 to-green-900',
+          textColor: 'text-green-100',
+          accentBg: 'bg-green-800',
+          cardBg: 'bg-slate-900',
+          textDefault: 'text-gray-200',
+          textMuted: 'text-gray-400',
+          cardBorder: 'border-green-800',
           decoration: (
             <div className="absolute right-0 bottom-0 w-32 h-32 opacity-20">
               <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10,80 Q30,85 50,75 T80,80" fill="none" stroke="white" strokeWidth="2">
+                <path d="M10,90 Q30,70 50,90 T90,90" fill="none" stroke="white" strokeWidth="5">
+                  <animate attributeName="d" dur="10s" repeatCount="indefinite" 
+                    values="M10,90 Q30,70 50,90 T90,90;
+                            M10,90 Q30,110 50,90 T90,90;
+                            M10,90 Q30,70 50,90 T90,90" />
+                </path>
+              </svg>
+            </div>
+          )
+        };
+      case 'fuoco':
+        return {
+          bgGradient: 'bg-gradient-to-r from-red-950 via-orange-950 to-red-900',
+          textColor: 'text-red-100',
+          accentBg: 'bg-red-800',
+          cardBg: 'bg-slate-900',
+          textDefault: 'text-gray-200',
+          textMuted: 'text-gray-400',
+          cardBorder: 'border-red-800',
+          decoration: (
+            <div className="absolute right-0 bottom-0 w-32 h-32 opacity-20">
+              <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50,10 Q60,40 90,50 Q60,60 50,90 Q40,60 10,50 Q40,40 50,10" fill="none" stroke="white" strokeWidth="5">
                   <animate attributeName="d" dur="8s" repeatCount="indefinite" 
-                    values="M10,80 Q30,85 50,75 T80,80;
-                            M10,75 Q30,80 50,70 T80,75;
-                            M10,80 Q30,85 50,75 T80,80" />
-                </path>
-                <path d="M20,50 L25,20 L30,50 L20,50" fill="white">
-                  <animate attributeName="d" dur="5s" repeatCount="indefinite" 
-                    values="M20,50 L25,20 L30,50 L20,50;
-                            M20,50 L25,15 L30,50 L20,50;
-                            M20,50 L25,20 L30,50 L20,50" />
-                </path>
-                <path d="M40,60 L45,25 L50,60 L40,60" fill="white">
-                  <animate attributeName="d" dur="6s" repeatCount="indefinite" 
-                    values="M40,60 L45,25 L50,60 L40,60;
-                            M40,60 L45,20 L50,60 L40,60;
-                            M40,60 L45,25 L50,60 L40,60" />
-                </path>
-                <path d="M60,55 L65,15 L70,55 L60,55" fill="white">
-                  <animate attributeName="d" dur="7s" repeatCount="indefinite" 
-                    values="M60,55 L65,15 L70,55 L60,55;
-                            M60,55 L65,10 L70,55 L60,55;
-                            M60,55 L65,15 L70,55 L60,55" />
+                    values="M50,10 Q60,40 90,50 Q60,60 50,90 Q40,60 10,50 Q40,40 50,10;
+                            M50,10 Q70,40 90,50 Q70,60 50,90 Q30,60 10,50 Q30,40 50,10;
+                            M50,10 Q60,40 90,50 Q60,60 50,90 Q40,60 10,50 Q40,40 50,10" />
                 </path>
               </svg>
             </div>
@@ -284,15 +251,25 @@ export default function EventDetail({ params }: { params: { id: string } }) {
         };
       default:
         return {
-          bgGradient: darkMode 
-            ? 'bg-gradient-to-r from-sky-900 to-blue-900' 
-            : 'bg-gradient-to-r from-sky-400 to-blue-500',
-          textColor: 'text-white',
-          accentBg: darkMode ? 'bg-sky-800' : 'bg-sky-400',
-          cardBg: darkMode ? 'bg-slate-800' : 'bg-white',
-          textDefault: darkMode ? 'text-gray-200' : 'text-gray-800',
-          cardBorder: darkMode ? 'border-sky-700' : 'border-sky-200',
-          decoration: null
+          bgGradient: 'bg-gradient-to-r from-sky-950 via-blue-950 to-sky-900',
+          textColor: 'text-sky-100',
+          accentBg: 'bg-sky-800',
+          cardBg: 'bg-slate-900',
+          textDefault: 'text-gray-200',
+          textMuted: 'text-gray-400',
+          cardBorder: 'border-sky-800',
+          decoration: (
+            <div className="absolute right-0 bottom-0 w-32 h-32 opacity-20">
+              <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0,25 Q25,0 50,25 T100,25 T150,25" fill="none" stroke="white" strokeWidth="5">
+                  <animate attributeName="d" dur="10s" repeatCount="indefinite" 
+                    values="M0,25 Q25,0 50,25 T100,25;
+                            M0,25 Q25,50 50,25 T100,25;
+                            M0,25 Q25,0 50,25 T100,25" />
+                </path>
+              </svg>
+            </div>
+          )
         };
     }
   };

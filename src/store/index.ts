@@ -10,6 +10,7 @@ export interface User {
   team: Team;
   score: number;
   skills: Record<string, number>; // mappa delle skill e relativi livelli
+  isAdmin?: boolean; // indica se l'utente è un amministratore
 }
 
 export interface Event {
@@ -31,7 +32,8 @@ const exampleUsers: User[] = [
     username: 'hackerman42',
     team: 'acqua',
     score: 1250,
-    skills: { 'Coding': 90, 'Security': 85, 'Algorithms': 80 }
+    skills: { 'Coding': 90, 'Security': 85, 'Algorithms': 80 },
+    isAdmin: true // Amministratore
   },
   {
     id: '2',

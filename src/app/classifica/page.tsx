@@ -126,22 +126,22 @@ export default function ClassificaPage() {
   // Ottieni il colore in base al team
   const getTeamColor = (team: Team) => {
     switch (team) {
-      case 'acqua': return 'bg-blue-500';
-      case 'erba': return 'bg-green-500';
-      case 'fuoco': return 'bg-red-500';
-      default: return 'bg-gray-500';
+      case 'acqua': return 'bg-sky-700';
+      case 'erba': return 'bg-green-700';
+      case 'fuoco': return 'bg-red-700';
+      default: return 'bg-gray-700';
     }
   };
   
   // Ottieni lo stile per il bottone attivo
   const getActiveButtonStyle = (isActive: boolean) => {
-    if (!isActive) return 'bg-gray-100 text-gray-700 hover:bg-gray-200';
+    if (!isActive) return 'bg-slate-800 text-gray-300 hover:bg-slate-700';
     
     switch (theme) {
-      case 'acqua': return 'bg-blue-600 text-white';
-      case 'erba': return 'bg-green-600 text-white';
-      case 'fuoco': return 'bg-red-600 text-white';
-      default: return 'bg-blue-600 text-white';
+      case 'acqua': return 'bg-sky-700 text-white';
+      case 'erba': return 'bg-green-700 text-white';
+      case 'fuoco': return 'bg-red-700 text-white';
+      default: return 'bg-sky-700 text-white';
     }
   };
   
@@ -155,229 +155,336 @@ export default function ClassificaPage() {
     }
   };
   
+  // Funzione per ottenere gli stili basati sul tema
+  const getThemeStyles = () => {
+    switch(theme) {
+      case 'acqua':
+        return {
+          mainGradient: 'bg-gradient-to-r from-sky-950 via-blue-950 to-sky-900',
+          cardBg: 'bg-slate-900',
+          border: 'border-sky-900',
+          highlight: 'bg-sky-800 text-sky-100',
+          button: 'bg-sky-700 hover:bg-sky-600 text-white',
+          textColor: 'text-sky-100',
+          textMuted: 'text-gray-400',
+          link: 'text-sky-400 hover:text-sky-300'
+        };
+      case 'fuoco':
+        return {
+          mainGradient: 'bg-gradient-to-r from-red-950 via-orange-950 to-red-900',
+          cardBg: 'bg-slate-900',
+          border: 'border-red-900',
+          highlight: 'bg-red-800 text-red-100',
+          button: 'bg-red-700 hover:bg-red-600 text-white',
+          textColor: 'text-red-100',
+          textMuted: 'text-gray-400',
+          link: 'text-red-400 hover:text-red-300'
+        };
+      case 'erba':
+        return {
+          mainGradient: 'bg-gradient-to-r from-green-950 via-emerald-950 to-green-900',
+          cardBg: 'bg-slate-900',
+          border: 'border-green-900',
+          highlight: 'bg-green-800 text-green-100',
+          button: 'bg-green-700 hover:bg-green-600 text-white',
+          textColor: 'text-green-100',
+          textMuted: 'text-gray-400',
+          link: 'text-green-400 hover:text-green-300'
+        };
+      default:
+        return {
+          mainGradient: 'bg-gradient-to-r from-sky-950 via-blue-950 to-sky-900',
+          cardBg: 'bg-slate-900',
+          border: 'border-sky-900',
+          highlight: 'bg-sky-800 text-sky-100',
+          button: 'bg-sky-700 hover:bg-sky-600 text-white',
+          textColor: 'text-sky-100',
+          textMuted: 'text-gray-400',
+          link: 'text-sky-400 hover:text-sky-300'
+        };
+    }
+  };
+  
+  const styles = getThemeStyles();
+  
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">Classifica</h1>
-        <p className="text-gray-600">Scopri chi sono i migliori partecipanti alle competizioni!</p>
-      </div>
-      
-      {/* Filtri e ordinamento */}
-      <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-        <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
-          <div>
-            <h3 className="text-sm font-medium text-gray-700 mb-2">Filtra per team</h3>
-            <div className="flex flex-wrap gap-2">
-              <button
-                onClick={() => setFilterTeam('all')}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${getActiveButtonStyle(filterTeam === 'all')}`}
-              >
-                Tutti i team
-              </button>
-              <button
-                onClick={() => setFilterTeam('acqua')}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${getActiveButtonStyle(filterTeam === 'acqua')}`}
-              >
-                Team Acqua
-              </button>
-              <button
-                onClick={() => setFilterTeam('erba')}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${getActiveButtonStyle(filterTeam === 'erba')}`}
-              >
-                Team Erba
-              </button>
-              <button
-                onClick={() => setFilterTeam('fuoco')}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${getActiveButtonStyle(filterTeam === 'fuoco')}`}
-              >
-                Team Fuoco
-              </button>
+    <div className={`min-h-screen ${styles.mainGradient} pt-8 pb-16`}>
+      <div className="container mx-auto px-4 py-8">
+        <div className="mb-8">
+          <h1 className={`text-3xl font-bold mb-2 ${styles.textColor}`}>Classifica</h1>
+          <p className={styles.textMuted}>Scopri chi sono i migliori partecipanti alle competizioni!</p>
+        </div>
+        
+        {/* Filtri e ordinamento */}
+        <div className={`${styles.cardBg} rounded-lg shadow-md p-6 mb-8 border ${styles.border}`}>
+          <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+            <div>
+              <h3 className={`text-sm font-medium ${styles.textColor} mb-2`}>Filtra per team</h3>
+              <div className="flex flex-wrap gap-2">
+                <button
+                  onClick={() => setFilterTeam('all')}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${getActiveButtonStyle(filterTeam === 'all')}`}
+                >
+                  Tutti i team
+                </button>
+                <button
+                  onClick={() => setFilterTeam('acqua')}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${getActiveButtonStyle(filterTeam === 'acqua')}`}
+                >
+                  Team Acqua
+                </button>
+                <button
+                  onClick={() => setFilterTeam('erba')}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${getActiveButtonStyle(filterTeam === 'erba')}`}
+                >
+                  Team Erba
+                </button>
+                <button
+                  onClick={() => setFilterTeam('fuoco')}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${getActiveButtonStyle(filterTeam === 'fuoco')}`}
+                >
+                  Team Fuoco
+                </button>
+              </div>
             </div>
-          </div>
-          
-          <div>
-            <h3 className="text-sm font-medium text-gray-700 mb-2">Ordina per</h3>
-            <div className="flex flex-wrap gap-2">
-              <button
-                onClick={() => setSortBy('score')}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${getActiveButtonStyle(sortBy === 'score')}`}
-              >
-                Punteggio
-              </button>
-              <button
-                onClick={() => setSortBy('coding')}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${getActiveButtonStyle(sortBy === 'coding')}`}
-              >
-                Coding
-              </button>
-              <button
-                onClick={() => setSortBy('security')}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${getActiveButtonStyle(sortBy === 'security')}`}
-              >
-                Security
-              </button>
-              <button
-                onClick={() => setSortBy('algorithms')}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${getActiveButtonStyle(sortBy === 'algorithms')}`}
-              >
-                Algorithms
-              </button>
+            
+            <div>
+              <h3 className={`text-sm font-medium ${styles.textColor} mb-2`}>Ordina per</h3>
+              <div className="flex flex-wrap gap-2">
+                <button
+                  onClick={() => setSortBy('score')}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${getActiveButtonStyle(sortBy === 'score')}`}
+                >
+                  Punteggio
+                </button>
+                <button
+                  onClick={() => setSortBy('coding')}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${getActiveButtonStyle(sortBy === 'coding')}`}
+                >
+                  Coding
+                </button>
+                <button
+                  onClick={() => setSortBy('security')}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${getActiveButtonStyle(sortBy === 'security')}`}
+                >
+                  Security
+                </button>
+                <button
+                  onClick={() => setSortBy('algorithms')}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${getActiveButtonStyle(sortBy === 'algorithms')}`}
+                >
+                  Algorithms
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      
-      {/* Tabella classifica */}
-      <div className="bg-white rounded-lg shadow-md overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Posizione
-                </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Utente
-                </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Team
-                </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Punteggio
-                </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Coding
-                </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Security
-                </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Algorithms
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {sortedLeaderboard.map((user, index) => {
-                const isCurrentUser = user.id === currentUser?.id;
-                
-                return (
+        
+        {/* Tabella classifica */}
+        <div className={`${styles.cardBg} rounded-lg shadow-md overflow-hidden border ${styles.border}`}>
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-slate-700">
+              <thead className="bg-slate-800">
+                <tr>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                    Posizione
+                  </th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                    Utente
+                  </th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                    Team
+                  </th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                    Punteggio
+                  </th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                    Skills
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-700">
+                {sortedLeaderboard.map((user, index) => (
                   <tr 
                     key={user.id} 
-                    className={isCurrentUser ? 'bg-yellow-50' : (index % 2 === 0 ? 'bg-white' : 'bg-gray-50')}
+                    className={
+                      currentUser?.id === user.id 
+                        ? `bg-opacity-25 ${styles.highlight}` 
+                        : ''
+                    }
                   >
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
-                        {index < 3 ? (
-                          <span className={`flex items-center justify-center w-8 h-8 rounded-full ${
-                            index === 0 ? 'bg-yellow-400' : 
-                            index === 1 ? 'bg-gray-300' : 
-                            'bg-yellow-700'
-                          } text-white font-bold`}>
-                            {index + 1}
-                          </span>
-                        ) : (
-                          <span className="text-gray-900 font-medium ml-2">
-                            {index + 1}
-                          </span>
-                        )}
+                        <div className={`
+                          flex items-center justify-center h-8 w-8 rounded-full 
+                          ${index < 3 ? 'bg-amber-600 text-white' : 'bg-slate-700 text-gray-300'}
+                          font-bold
+                        `}>
+                          {index + 1}
+                        </div>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
+                      <div className={`text-sm font-medium ${styles.textColor}`}>{user.username}</div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
-                        <div className={`w-8 h-8 rounded-full ${getTeamColor(user.team)} flex items-center justify-center text-white font-bold`}>
-                          {user.username.charAt(0).toUpperCase()}
-                        </div>
-                        <div className="ml-4">
-                          <div className={`text-sm font-medium ${isCurrentUser ? 'text-blue-600 font-bold' : 'text-gray-900'}`}>
-                            {user.username} {isCurrentUser && '(Tu)'}
+                        <div className={`h-4 w-4 rounded-full mr-2 ${getTeamColor(user.team)}`}></div>
+                        <span className={`text-sm ${styles.textColor}`}>{formatTeamName(user.team)}</span>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm font-bold text-amber-400">{user.score}</div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex flex-col space-y-1">
+                        {Object.entries(user.skills).map(([skill, value]) => (
+                          <div key={skill} className="flex items-center">
+                            <span className={`text-xs ${styles.textMuted} w-20`}>{skill}</span>
+                            <div className="h-2 w-24 bg-slate-700 rounded-full overflow-hidden">
+                              <div 
+                                className={`h-full rounded-full ${
+                                  skill === 'Coding' ? 'bg-purple-600' : 
+                                  skill === 'Security' ? 'bg-yellow-600' : 'bg-blue-600'
+                                }`}
+                                style={{ width: `${value}%` }}
+                              ></div>
+                            </div>
+                            <span className={`text-xs ${styles.textMuted} ml-2`}>{value}</span>
                           </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                        user.team === 'acqua' ? 'bg-blue-100 text-blue-800' : 
-                        user.team === 'erba' ? 'bg-green-100 text-green-800' : 
-                        'bg-red-100 text-red-800'
-                      }`}>
-                        {formatTeamName(user.team)}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      {user.score} punti
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <div className="w-full bg-gray-200 rounded-full h-2.5 mr-2 max-w-[100px]">
-                          <div 
-                            className="h-2.5 rounded-full bg-purple-600"
-                            style={{ width: `${user.skills['Coding'] || 0}%` }}
-                          ></div>
-                        </div>
-                        <span className="text-sm text-gray-500">{user.skills['Coding'] || 0}</span>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <div className="w-full bg-gray-200 rounded-full h-2.5 mr-2 max-w-[100px]">
-                          <div 
-                            className="h-2.5 rounded-full bg-yellow-500"
-                            style={{ width: `${user.skills['Security'] || 0}%` }}
-                          ></div>
-                        </div>
-                        <span className="text-sm text-gray-500">{user.skills['Security'] || 0}</span>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <div className="w-full bg-gray-200 rounded-full h-2.5 mr-2 max-w-[100px]">
-                          <div 
-                            className="h-2.5 rounded-full bg-blue-500"
-                            style={{ width: `${user.skills['Algorithms'] || 0}%` }}
-                          ></div>
-                        </div>
-                        <span className="text-sm text-gray-500">{user.skills['Algorithms'] || 0}</span>
+                        ))}
                       </div>
                     </td>
                   </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
         
-        {sortedLeaderboard.length === 0 && (
-          <div className="p-8 text-center">
-            <p className="text-gray-600">Nessun utente trovato con i filtri selezionati.</p>
+        {/* Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+          <div className={`${styles.cardBg} p-6 rounded-lg shadow-md border ${styles.border}`}>
+            <h3 className={`text-lg font-medium mb-4 ${styles.textColor}`}>Punteggio per Team</h3>
+            <div className="space-y-4">
+              <div>
+                <div className="flex justify-between mb-1">
+                  <span className={`text-sm ${styles.textColor}`}>Team Acqua</span>
+                  <span className={`text-sm ${styles.textMuted}`}>
+                    {leaderboard.filter(u => u.team === 'acqua').reduce((sum, u) => sum + u.score, 0)}
+                  </span>
+                </div>
+                <div className="h-2 w-full bg-slate-700 rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-sky-600 rounded-full"
+                    style={{ 
+                      width: `${leaderboard.length ? 
+                        (leaderboard.filter(u => u.team === 'acqua').reduce((sum, u) => sum + u.score, 0) / 
+                        leaderboard.reduce((sum, u) => sum + u.score, 0) * 100) : 0
+                      }%` 
+                    }}
+                  ></div>
+                </div>
+              </div>
+              
+              <div>
+                <div className="flex justify-between mb-1">
+                  <span className={`text-sm ${styles.textColor}`}>Team Fuoco</span>
+                  <span className={`text-sm ${styles.textMuted}`}>
+                    {leaderboard.filter(u => u.team === 'fuoco').reduce((sum, u) => sum + u.score, 0)}
+                  </span>
+                </div>
+                <div className="h-2 w-full bg-slate-700 rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-red-600 rounded-full"
+                    style={{ 
+                      width: `${leaderboard.length ? 
+                        (leaderboard.filter(u => u.team === 'fuoco').reduce((sum, u) => sum + u.score, 0) / 
+                        leaderboard.reduce((sum, u) => sum + u.score, 0) * 100) : 0
+                      }%` 
+                    }}
+                  ></div>
+                </div>
+              </div>
+              
+              <div>
+                <div className="flex justify-between mb-1">
+                  <span className={`text-sm ${styles.textColor}`}>Team Erba</span>
+                  <span className={`text-sm ${styles.textMuted}`}>
+                    {leaderboard.filter(u => u.team === 'erba').reduce((sum, u) => sum + u.score, 0)}
+                  </span>
+                </div>
+                <div className="h-2 w-full bg-slate-700 rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-green-600 rounded-full"
+                    style={{ 
+                      width: `${leaderboard.length ? 
+                        (leaderboard.filter(u => u.team === 'erba').reduce((sum, u) => sum + u.score, 0) / 
+                        leaderboard.reduce((sum, u) => sum + u.score, 0) * 100) : 0
+                      }%` 
+                    }}
+                  ></div>
+                </div>
+              </div>
+            </div>
           </div>
-        )}
-      </div>
-      
-      {/* Spiegazione del punteggio */}
-      <div className="bg-white rounded-lg shadow-md p-6 mt-8">
-        <h3 className="text-lg font-bold mb-4">Come funziona il punteggio?</h3>
-        <p className="text-gray-600 mb-4">
-          Il punteggio viene calcolato in base alle performance nelle competizioni e riflette il tuo livello complessivo.
-          Partecipando agli eventi e ottenendo buoni risultati, aumenterai il tuo punteggio e salirai in classifica!
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-purple-50 rounded-lg p-4">
-            <h4 className="font-bold text-purple-800 mb-2">Coding</h4>
-            <p className="text-sm text-gray-700">
-              Riflette le tue capacità di programmazione, algoritmi e risoluzione di problemi.
-            </p>
+          
+          <div className={`${styles.cardBg} p-6 rounded-lg shadow-md border ${styles.border}`}>
+            <h3 className={`text-lg font-medium mb-4 ${styles.textColor}`}>Top Skill: Coding</h3>
+            <div className="space-y-3">
+              {leaderboard
+                .sort((a, b) => (b.skills['Coding'] || 0) - (a.skills['Coding'] || 0))
+                .slice(0, 5)
+                .map(user => (
+                  <div key={user.id} className="flex items-center">
+                    <div className={`h-8 w-8 rounded-full ${getTeamColor(user.team)} flex items-center justify-center text-white font-bold mr-3`}>
+                      {user.username.charAt(0).toUpperCase()}
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex justify-between">
+                        <span className={`text-sm font-medium ${styles.textColor}`}>{user.username}</span>
+                        <span className={`text-sm ${styles.textMuted}`}>{user.skills['Coding']}</span>
+                      </div>
+                      <div className="h-1.5 w-full bg-slate-700 rounded-full overflow-hidden mt-1">
+                        <div 
+                          className="h-full bg-purple-600 rounded-full"
+                          style={{ width: `${user.skills['Coding']}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              }
+            </div>
           </div>
-          <div className="bg-yellow-50 rounded-lg p-4">
-            <h4 className="font-bold text-yellow-800 mb-2">Security</h4>
-            <p className="text-sm text-gray-700">
-              Misura le tue conoscenze in sicurezza informatica, penetration testing e difesa.
-            </p>
-          </div>
-          <div className="bg-blue-50 rounded-lg p-4">
-            <h4 className="font-bold text-blue-800 mb-2">Algorithms</h4>
-            <p className="text-sm text-gray-700">
-              Valuta la tua competenza con algoritmi, strutture dati e ottimizzazione.
-            </p>
+          
+          <div className={`${styles.cardBg} p-6 rounded-lg shadow-md border ${styles.border}`}>
+            <h3 className={`text-lg font-medium mb-4 ${styles.textColor}`}>Top Skill: Security</h3>
+            <div className="space-y-3">
+              {leaderboard
+                .sort((a, b) => (b.skills['Security'] || 0) - (a.skills['Security'] || 0))
+                .slice(0, 5)
+                .map(user => (
+                  <div key={user.id} className="flex items-center">
+                    <div className={`h-8 w-8 rounded-full ${getTeamColor(user.team)} flex items-center justify-center text-white font-bold mr-3`}>
+                      {user.username.charAt(0).toUpperCase()}
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex justify-between">
+                        <span className={`text-sm font-medium ${styles.textColor}`}>{user.username}</span>
+                        <span className={`text-sm ${styles.textMuted}`}>{user.skills['Security']}</span>
+                      </div>
+                      <div className="h-1.5 w-full bg-slate-700 rounded-full overflow-hidden mt-1">
+                        <div 
+                          className="h-full bg-yellow-600 rounded-full"
+                          style={{ width: `${user.skills['Security']}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              }
+            </div>
           </div>
         </div>
       </div>
