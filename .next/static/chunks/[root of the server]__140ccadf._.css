@@ -179,10 +179,6 @@
     --color-purple-900: oklch(.381 .176 304.987);
     --color-pink-900: oklch(.408 .153 2.432);
     --color-rose-800: oklch(.455 .188 13.697);
-    --color-slate-100: oklch(.968 .007 247.896);
-    --color-slate-300: oklch(.869 .022 252.894);
-    --color-slate-400: oklch(.704 .04 256.788);
-    --color-slate-600: oklch(.446 .043 257.281);
     --color-slate-700: oklch(.372 .044 257.287);
     --color-slate-800: oklch(.279 .041 260.031);
     --color-slate-900: oklch(.208 .042 265.755);
@@ -1743,12 +1739,6 @@
     margin-block-end: calc(calc(var(--spacing) * 4) * calc(1 - var(--tw-space-y-reverse)));
   }
 
-  :where(.space-y-6 > :not(:last-child)) {
-    --tw-space-y-reverse: 0;
-    margin-block-start: calc(calc(var(--spacing) * 6) * var(--tw-space-y-reverse));
-    margin-block-end: calc(calc(var(--spacing) * 6) * calc(1 - var(--tw-space-y-reverse)));
-  }
-
   :where(.-space-x-2 > :not(:last-child)) {
     --tw-space-x-reverse: 0;
     margin-inline-start: calc(calc(var(--spacing) * -2) * var(--tw-space-x-reverse));
@@ -1787,10 +1777,6 @@
 
   :where(.divide-slate-700 > :not(:last-child)) {
     border-color: var(--color-slate-700);
-  }
-
-  :where(.divide-slate-800 > :not(:last-child)) {
-    border-color: var(--color-slate-800);
   }
 
   .place-self-auto {
@@ -2304,10 +2290,6 @@
     background-color: color-mix(in oklab, var(--color-green-900) 50%, transparent);
   }
 
-  .bg-green-950 {
-    background-color: var(--color-green-950);
-  }
-
   .bg-indigo-100 {
     background-color: var(--color-indigo-100);
   }
@@ -2372,20 +2354,12 @@
     background-color: color-mix(in oklab, var(--color-red-900) 50%, transparent);
   }
 
-  .bg-red-950 {
-    background-color: var(--color-red-950);
-  }
-
   .bg-sky-400 {
     background-color: var(--color-sky-400);
   }
 
   .bg-sky-500 {
     background-color: var(--color-sky-500);
-  }
-
-  .bg-sky-500\/80 {
-    background-color: color-mix(in oklab, var(--color-sky-500) 80%, transparent);
   }
 
   .bg-sky-600 {
@@ -2410,10 +2384,6 @@
 
   .bg-sky-900\/50 {
     background-color: color-mix(in oklab, var(--color-sky-900) 50%, transparent);
-  }
-
-  .bg-sky-950 {
-    background-color: var(--color-sky-950);
   }
 
   .bg-slate-700 {
@@ -2976,10 +2946,6 @@
     padding: calc(var(--spacing) * 10);
   }
 
-  .px-1 {
-    padding-inline: calc(var(--spacing) * 1);
-  }
-
   .px-2 {
     padding-inline: calc(var(--spacing) * 2);
   }
@@ -2994,10 +2960,6 @@
 
   .px-4 {
     padding-inline: calc(var(--spacing) * 4);
-  }
-
-  .px-5 {
-    padding-inline: calc(var(--spacing) * 5);
   }
 
   .px-6 {
@@ -3074,14 +3036,6 @@
 
   .pb-3 {
     padding-bottom: calc(var(--spacing) * 3);
-  }
-
-  .pb-4 {
-    padding-bottom: calc(var(--spacing) * 4);
-  }
-
-  .pb-12 {
-    padding-bottom: calc(var(--spacing) * 12);
   }
 
   .pb-16 {
@@ -3483,14 +3437,6 @@
 
   .text-sky-500 {
     color: var(--color-sky-500);
-  }
-
-  .text-slate-100 {
-    color: var(--color-slate-100);
-  }
-
-  .text-slate-400 {
-    color: var(--color-slate-400);
   }
 
   .text-white {
