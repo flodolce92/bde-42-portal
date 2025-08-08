@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { use, useState, useEffect } from 'react';
 import { useTheme } from '@/hooks/useTheme';
 import { useAppStore, Event, User } from '@/store';
 import Link from 'next/link';
@@ -79,7 +79,8 @@ const mockParticipants: User[] = [
   }
 ];
 
-export default function EventDetail({ params }: { params: { id: string } }) {
+export default function EventDetail({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
   const { theme } = useTheme();
   const { currentUser, registerForEvent, unregisterFromEvent } = useAppStore();
   const [event, setEvent] = useState<Event | null>(null);
@@ -103,7 +104,7 @@ export default function EventDetail({ params }: { params: { id: string } }) {
   useEffect(() => {
     // In un'app reale, qui caricheremmo i dati dal backend
     // Per ora usiamo i dati di esempio
-    const foundEvent = mockEvents.find(e => e.id === params.id);
+    const foundEvent = mockEvents.find(e => e.id === id);
     setEvent(foundEvent || null);
     
     if (foundEvent?.participants) {
@@ -118,7 +119,7 @@ export default function EventDetail({ params }: { params: { id: string } }) {
         setIsRegistered(foundEvent.participants.includes(currentUser.id));
       }
     }
-  }, [params.id, currentUser]);
+  }, [id, currentUser]);
   
   const handleRegistration = () => {
     if (!event || !currentUser) return;

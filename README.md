@@ -46,9 +46,6 @@ Note:
 ---
 
 ### 🛣️ Prossimi passi (Roadmap)
-- **Hosting**
-  - Vercel consigliato: collega il repo, imposta il framework Next.js, build `npm run build` e start `npm start` (auto-configurati da Vercel).
-  - Alternativa: Docker/Container + Node su server (reverse proxy con Nginx, HTTPS via Let's Encrypt).
 
 - **Login tramite Intra 42 (OAuth2)**
   - Accedi all' Intra 42 e ottieni `CLIENT_ID` e `CLIENT_SECRET`.
