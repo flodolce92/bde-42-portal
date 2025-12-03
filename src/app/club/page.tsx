@@ -8,9 +8,9 @@ import { useState } from 'react';
 const clubsData = [
   {
     id: 'startup',
-    name: 'Startup Club',
-    description: 'Il nostro Startup Club ti aiuta a sviluppare le tue idee imprenditoriali e a trasformarle in business reali. Partecipa a workshop, incontra mentor esperti e lavora con altri studenti per creare la tua startup.',
-    longDescription: 'Attraverso il nostro Startup Club imparerai come validare un&apos;idea, creare un business model canvas, fare pitch efficaci e cercare finanziamenti. Organizziamo regolarmente incontri con imprenditori di successo, workshop pratici e hackathon dedicati all&apos;innovazione. Se hai sempre sognato di lanciare la tua startup, questo è il posto giusto per iniziare!',
+    name: 'Vibe It Club',
+    description: 'Il nostro Vibe It Club ti aiuta a sviluppare le tue idee imprenditoriali e a trasformarle in business reali. Partecipa a workshop, incontra mentor esperti e lavora con altri studenti per creare la tua startup.',
+    longDescription: 'Attraverso il nostro Vibe It Club imparerai come validare un&apos;idea, creare un business model canvas, fare pitch efficaci e cercare finanziamenti. Organizziamo regolarmente incontri con imprenditori di successo, workshop pratici e hackathon dedicati all&apos;innovazione. Se hai sempre sognato di lanciare la tua startup, questo è il posto giusto per iniziare!',
     meetings: 'Ogni Martedì, 18:00-20:00',
     location: 'Aula Magna - 42 Roma Luiss',
     leader: 'Marco Rossi',
@@ -74,178 +74,210 @@ const clubsData = [
 ];
 
 export default function ClubPage() {
-  const { theme } = useTheme();
-  const [selectedClub, setSelectedClub] = useState(clubsData[0]);
-  
-  // Funzione per ottenere gli stili basati sul tema
-  const getThemeStyles = () => {
-    switch(theme) {
-      case 'acqua':
-        return {
-          mainGradient: 'bg-gradient-to-r from-sky-950 via-blue-950 to-sky-900',
-          cardBg: 'bg-slate-900',
-          border: 'border-sky-900',
-          highlight: 'bg-sky-800 text-sky-100',
-          button: 'bg-sky-700 hover:bg-sky-600 text-white',
-          secondaryButton: 'bg-transparent border border-sky-700 text-sky-100 hover:bg-sky-900',
-          activeTab: 'bg-sky-700 text-white',
-          inactiveTab: 'text-sky-100 hover:bg-sky-900',
-          textColor: 'text-sky-100',
-          textMuted: 'text-gray-400',
-          link: 'text-sky-400 hover:text-sky-300'
-        };
-      case 'fuoco':
-        return {
-          mainGradient: 'bg-gradient-to-r from-red-950 via-orange-950 to-red-900',
-          cardBg: 'bg-slate-900',
-          border: 'border-red-900',
-          highlight: 'bg-red-800 text-red-100',
-          button: 'bg-red-700 hover:bg-red-600 text-white',
-          secondaryButton: 'bg-transparent border border-red-700 text-red-100 hover:bg-red-900',
-          activeTab: 'bg-red-700 text-white',
-          inactiveTab: 'text-red-100 hover:bg-red-900',
-          textColor: 'text-red-100',
-          textMuted: 'text-gray-400',
-          link: 'text-red-400 hover:text-red-300'
-        };
-      case 'erba':
-        return {
-          mainGradient: 'bg-gradient-to-r from-green-950 via-emerald-950 to-green-900',
-          cardBg: 'bg-slate-900',
-          border: 'border-green-900',
-          highlight: 'bg-green-800 text-green-100',
-          button: 'bg-green-700 hover:bg-green-600 text-white',
-          secondaryButton: 'bg-transparent border border-green-700 text-green-100 hover:bg-green-900',
-          activeTab: 'bg-green-700 text-white',
-          inactiveTab: 'text-green-100 hover:bg-green-900',
-          textColor: 'text-green-100',
-          textMuted: 'text-gray-400',
-          link: 'text-green-400 hover:text-green-300'
-        };
-      default:
-        return {
-          mainGradient: 'bg-gradient-to-r from-sky-950 via-blue-950 to-sky-900',
-          cardBg: 'bg-slate-900',
-          border: 'border-sky-900',
-          highlight: 'bg-sky-800 text-sky-100',
-          button: 'bg-sky-700 hover:bg-sky-600 text-white',
-          secondaryButton: 'bg-transparent border border-sky-700 text-sky-100 hover:bg-sky-900',
-          activeTab: 'bg-sky-700 text-white',
-          inactiveTab: 'text-sky-100 hover:bg-sky-900',
-          textColor: 'text-sky-100',
-          textMuted: 'text-gray-400',
-          link: 'text-sky-400 hover:text-sky-300'
-        };
-    }
-  };
-  
-  const styles = getThemeStyles();
-  
-  return (
-    <div className={`min-h-screen ${styles.mainGradient} pt-8 pb-16`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-8">
-          <h1 className={`text-3xl font-bold mb-2 ${styles.textColor}`}>I Nostri Club</h1>
-          <p className={`${styles.textMuted}`}>
-            Scopri la nostra offerta di club tematici e trova quello più adatto ai tuoi interessi
-          </p>
-        </div>
-        
-        {/* Menu di navigazione dei club */}
-        <div className={`${styles.cardBg} rounded-lg shadow-md p-6 mb-8 border ${styles.border}`}>
-          <div>
-            <h3 className={`text-sm font-medium ${styles.textColor} mb-3`}>Seleziona un club</h3>
-            <div className="flex flex-wrap gap-2">
-              {clubsData.map((club) => (
-                <button
-                  key={club.id}
-                  onClick={() => setSelectedClub(club)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                    selectedClub.id === club.id ? styles.activeTab : styles.inactiveTab
-                  }`}
-                >
-                  {club.name}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-        
-        {/* Dettagli del club selezionato */}
-        <div className={`${styles.cardBg} shadow-xl rounded-lg overflow-hidden border ${styles.border}`}>
-          {/* Header con gradient personalizzato */}
-          <div className={`bg-gradient-to-r ${selectedClub.color} p-8`}>
-            <div className="flex flex-col md:flex-row justify-between items-center">
-              <div className="flex items-center mb-4 md:mb-0">
-                <div className="h-16 w-16 rounded-full bg-white bg-opacity-20 flex items-center justify-center text-white mr-4">
-                  {selectedClub.icon}
-                </div>
-                <div>
-                  <h2 className="text-2xl font-bold text-white">{selectedClub.name}</h2>
-                  <p className="text-white text-opacity-80">{selectedClub.members} membri</p>
-                </div>
-              </div>
-              <button className={`px-6 py-3 rounded-lg font-bold ${styles.button}`}>
-                Unisciti al Club
-              </button>
-            </div>
-          </div>
-          
-          {/* Contenuto del club */}
-          <div className="p-8">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="md:col-span-2">
-                <h3 className={`text-xl font-semibold mb-4 ${styles.textColor}`}>Descrizione</h3>
-                <p className={`mb-6 ${styles.textMuted}`}>{selectedClub.longDescription}</p>
-                
-                <h3 className={`text-xl font-semibold mb-4 ${styles.textColor}`}>Attività</h3>
-                <ul className={`list-disc list-inside mb-6 ${styles.textMuted}`}>
-                  <li>Incontri regolari settimanali</li>
-                  <li>Workshop pratici e teorici</li>
-                  <li>Progetti collaborativi</li>
-                  <li>Eventi speciali e competizioni</li>
-                </ul>
-                
-                <Link 
-                  href={`/club/${selectedClub.id}`}
-                  className={`inline-block px-6 py-3 rounded-lg font-medium ${styles.button}`}
-                >
-                  Visualizza calendario completo
-                </Link>
-              </div>
-              
-              <div className={`${styles.highlight} p-6 rounded-lg`}>
-                <h3 className="text-xl font-semibold mb-4">Informazioni</h3>
-                
-                <div className="mb-4">
-                  <h4 className="font-semibold mb-1">Incontri</h4>
-                  <p>{selectedClub.meetings}</p>
-                </div>
-                
-                <div className="mb-4">
-                  <h4 className="font-semibold mb-1">Luogo</h4>
-                  <p>{selectedClub.location}</p>
-                </div>
-                
-                <div className="mb-4">
-                  <h4 className="font-semibold mb-1">Responsabile</h4>
-                  <p>{selectedClub.leader}</p>
-                </div>
-                
-                <div className="mb-4">
-                  <h4 className="font-semibold mb-1">Livello richiesto</h4>
-                  <p>Aperto a tutti</p>
-                </div>
-                
-                <div>
-                  <h4 className="font-semibold mb-1">Contatto</h4>
-                  <p className={styles.link}>club@42roma.it</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-} 
+	const { theme } = useTheme();
+	const [selectedClub, setSelectedClub] = useState(clubsData[0]);
+
+	// Funzione per ottenere il prossimo evento di Vibe It
+	const getVibeItNextEvent = () => {
+		// Esempio di evento - sostituire con dati reali dalla sezione eventi
+		return {
+			title: "Workshop: Validazione dell'Idea",
+			date: "2024-02-15",
+			time: "18:00",
+			location: "Aula Magna - 42 Roma Luiss",
+			description: "Impara a validare la tua idea di business con tecniche pratiche"
+		};
+	};
+
+	const nextEvent = selectedClub.id === 'startup' ? getVibeItNextEvent() : null;
+
+	// Funzione per ottenere gli stili basati sul tema
+	const getThemeStyles = () => {
+		switch(theme) {
+			case 'acqua':
+				return {
+					mainGradient: 'bg-gradient-to-r from-sky-950 via-blue-950 to-sky-900',
+					cardBg: 'bg-slate-900',
+					border: 'border-sky-900',
+					highlight: 'bg-sky-800 text-sky-100',
+					button: 'bg-sky-700 hover:bg-sky-600 text-white',
+					secondaryButton: 'bg-transparent border border-sky-700 text-sky-100 hover:bg-sky-900',
+					activeTab: 'bg-sky-700 text-white',
+					inactiveTab: 'text-sky-100 hover:bg-sky-900',
+					textColor: 'text-sky-100',
+					textMuted: 'text-gray-400',
+					link: 'text-sky-400 hover:text-sky-300'
+				};
+			case 'fuoco':
+				return {
+					mainGradient: 'bg-gradient-to-r from-red-950 via-orange-950 to-red-900',
+					cardBg: 'bg-slate-900',
+					border: 'border-red-900',
+					highlight: 'bg-red-800 text-red-100',
+					button: 'bg-red-700 hover:bg-red-600 text-white',
+					secondaryButton: 'bg-transparent border border-red-700 text-red-100 hover:bg-red-900',
+					activeTab: 'bg-red-700 text-white',
+					inactiveTab: 'text-red-100 hover:bg-red-900',
+					textColor: 'text-red-100',
+					textMuted: 'text-gray-400',
+					link: 'text-red-400 hover:text-red-300'
+				};
+			case 'erba':
+				return {
+					mainGradient: 'bg-gradient-to-r from-green-950 via-emerald-950 to-green-900',
+					cardBg: 'bg-slate-900',
+					border: 'border-green-900',
+					highlight: 'bg-green-800 text-green-100',
+					button: 'bg-green-700 hover:bg-green-600 text-white',
+					secondaryButton: 'bg-transparent border border-green-700 text-green-100 hover:bg-green-900',
+					activeTab: 'bg-green-700 text-white',
+					inactiveTab: 'text-green-100 hover:bg-green-900',
+					textColor: 'text-green-100',
+					textMuted: 'text-gray-400',
+					link: 'text-green-400 hover:text-green-300'
+				};
+			default:
+				return {
+					mainGradient: 'bg-gradient-to-r from-sky-950 via-blue-950 to-sky-900',
+					cardBg: 'bg-slate-900',
+					border: 'border-sky-900',
+					highlight: 'bg-sky-800 text-sky-100',
+					button: 'bg-sky-700 hover:bg-sky-600 text-white',
+					secondaryButton: 'bg-transparent border border-sky-700 text-sky-100 hover:bg-sky-900',
+					activeTab: 'bg-sky-700 text-white',
+					inactiveTab: 'text-sky-100 hover:bg-sky-900',
+					textColor: 'text-sky-100',
+					textMuted: 'text-gray-400',
+					link: 'text-sky-400 hover:text-sky-300'
+				};
+		}
+	};
+
+	const styles = getThemeStyles();
+
+	return (
+		<div className={`min-h-screen ${styles.mainGradient} pt-8 pb-16`}>
+			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<div className="mb-8">
+					<h1 className={`text-3xl font-bold mb-2 ${styles.textColor}`}>I Nostri Club</h1>
+					<p className={`${styles.textMuted}`}>
+						Scopri la nostra offerta di club tematici e trova quello più adatto ai tuoi interessi
+					</p>
+				</div>
+
+				{/* Menu di navigazione dei club */}
+				<div className={`${styles.cardBg} rounded-lg shadow-md p-6 mb-8 border ${styles.border}`}>
+					<div>
+						<h3 className={`text-sm font-medium ${styles.textColor} mb-3`}>Seleziona un club</h3>
+						<div className="flex flex-wrap gap-2">
+							{clubsData.map((club) => (
+								<button
+									key={club.id}
+									onClick={() => setSelectedClub(club)}
+									className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+										selectedClub.id === club.id ? styles.activeTab : styles.inactiveTab
+									}`}
+								>
+									{club.name}
+								</button>
+							))}
+						</div>
+					</div>
+				</div>
+
+				{/* Dettagli del club selezionato */}
+				<div className={`${styles.cardBg} shadow-xl rounded-lg overflow-hidden border ${styles.border}`}>
+					{/* Header con gradient personalizzato */}
+					<div className={`bg-gradient-to-r ${selectedClub.color} p-8`}>
+						<div className="flex flex-col md:flex-row justify-between items-center">
+							<div className="flex items-center mb-4 md:mb-0">
+								<div className="h-16 w-16 rounded-full bg-white bg-opacity-20 flex items-center justify-center text-white mr-4">
+									{selectedClub.icon}
+								</div>
+								<div>
+									<h2 className="text-2xl font-bold text-white">{selectedClub.name}</h2>
+									<p className="text-white text-opacity-80">{selectedClub.members} membri</p>
+								</div>
+							</div>
+							<button className={`px-6 py-3 rounded-lg font-bold ${styles.button}`}>
+								Unisciti al Club
+							</button>
+						</div>
+					</div>
+
+					{/* Contenuto del club */}
+					<div className="p-8">
+						<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+							<div className="md:col-span-2">
+								<h3 className={`text-xl font-semibold mb-4 ${styles.textColor}`}>Descrizione</h3>
+								<p className={`mb-6 ${styles.textMuted}`}>{selectedClub.longDescription}</p>
+
+								<h3 className={`text-xl font-semibold mb-4 ${styles.textColor}`}>Attività</h3>
+								<ul className={`list-disc list-inside mb-6 ${styles.textMuted}`}>
+									<li>Incontri regolari settimanali</li>
+									<li>Workshop pratici e teorici</li>
+									<li>Progetti collaborativi</li>
+									<li>Eventi speciali e competizioni</li>
+								</ul>
+
+								{nextEvent && (
+									<div className={`next-event ${styles.cardBg} border ${styles.border} rounded-lg p-6 mb-6`}>
+										<h3 className={`text-xl font-semibold mb-4 ${styles.textColor}`}>Prossimo Evento</h3>
+										<div className={`${styles.highlight} rounded-lg p-4`}>
+											<h4 className="text-lg font-bold mb-2">{nextEvent.title}</h4>
+											<div className="space-y-2">
+												<p className="flex items-center">
+													<svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+														<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+													</svg>
+													{new Date(nextEvent.date).toLocaleDateString('it-IT')} - {nextEvent.time}
+												</p>
+												<p className="flex items-center">
+													<svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+														<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+														<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+													</svg>
+													{nextEvent.location}
+												</p>
+												<p className="mt-3">{nextEvent.description}</p>
+											</div>
+										</div>
+									</div>
+								)}
+							</div>
+
+							<div className={`${styles.highlight} p-6 rounded-lg`}>
+								<h3 className="text-xl font-semibold mb-4">Informazioni</h3>
+
+								<div className="mb-4">
+									<h4 className="font-semibold mb-1">Incontri</h4>
+									<p>{selectedClub.meetings}</p>
+								</div>
+
+								<div className="mb-4">
+									<h4 className="font-semibold mb-1">Luogo</h4>
+									<p>{selectedClub.location}</p>
+								</div>
+
+								<div className="mb-4">
+									<h4 className="font-semibold mb-1">Responsabile</h4>
+									<p>{selectedClub.leader}</p>
+								</div>
+
+								<div className="mb-4">
+									<h4 className="font-semibold mb-1">Livello richiesto</h4>
+									<p>Aperto a tutti</p>
+								</div>
+
+								<div>
+									<h4 className="font-semibold mb-1">Contatto</h4>
+									<p className={styles.link}>club@42roma.it</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+}

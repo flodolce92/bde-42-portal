@@ -20,8 +20,9 @@ export interface Event {
   date: string;
   time: string;
   duration: string;
-  type: 'coding' | 'ctf' | 'quiz' | 'hackathon' | 'altro';
+  type: 'coding' | 'ctf' | 'quiz' | 'hackathon' | 'workshop' | 'altro';
   imageUrl?: string;
+  files?: { name: string; url: string }[];
   participants?: string[]; // array di ID utenti
 }
 
@@ -98,32 +99,48 @@ const exampleEvents: Event[] = [
     type: 'quiz',
     participants: ['2', '3', '5']
   }
+  ,
+  {
+    id: '4',
+    title: 'Workshop - Introduzione a React',
+    description: 'Un workshop pratico di mezza giornata su React: componenti, hooks e best practice. Materiali e esercizi inclusi.',
+    date: '2024-07-10',
+    time: '09:30',
+    duration: '4h',
+    type: 'workshop',
+    imageUrl: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c',
+    files: [
+      { name: 'Slides - Introduzione a React.pdf', url: 'https://example.com/files/react-workshop-slides.pdf' },
+      { name: 'Esercizi.zip', url: 'https://example.com/files/react-workshop-exercises.zip' }
+    ],
+    participants: ['1', '2']
+  }
 ];
 
 interface AppState {
   // Utente corrente
   currentUser: User | null;
   setCurrentUser: (user: User | null) => void;
-  
+
   // Lista degli utenti
   users: User[];
   addUser: (user: User) => void;
   removeUser: (userId: string) => void;
-  
+
   // Lista degli eventi
   events: Event[];
   addEvent: (event: Event) => void;
   removeEvent: (eventId: string) => void;
   updateEvent: (eventId: string, eventData: Partial<Event>) => void;
-  
+
   // Iscrizioni agli eventi
   registerForEvent: (eventId: string, userId: string) => void;
   unregisterFromEvent: (eventId: string, userId: string) => void;
-  
+
   // Classifica
   leaderboard: User[];
   updateScore: (userId: string, additionalScore: number) => void;
-  
+
   // Gestione skill
   updateSkill: (userId: string, skillName: string, level: number) => void;
 }
@@ -137,117 +154,117 @@ export const useAppStore = create<AppState>()(
       users: exampleUsers,  // Utilizzo dei dati di esempio
       events: exampleEvents,  // Utilizzo degli eventi di esempio
       leaderboard: exampleUsers,  // La classifica iniziale è uguale agli utenti
-      
+
       // Azioni per l'utente
       setCurrentUser: (user) => set({ currentUser: user }),
-      
+
       // Azioni per gli utenti
-      addUser: (user) => set((state) => ({ 
+      addUser: (user) => set((state) => ({
         users: [...state.users, user],
-        leaderboard: [...state.leaderboard, user] 
+        leaderboard: [...state.leaderboard, user]
       })),
-      removeUser: (userId) => set((state) => ({ 
+      removeUser: (userId) => set((state) => ({
         users: state.users.filter(user => user.id !== userId),
         leaderboard: state.leaderboard.filter(user => user.id !== userId)
       })),
-      
+
       // Azioni per gli eventi
-      addEvent: (event) => set((state) => ({ 
-        events: [...state.events, event] 
+      addEvent: (event) => set((state) => ({
+        events: [...state.events, event]
       })),
-      removeEvent: (eventId) => set((state) => ({ 
-        events: state.events.filter(event => event.id !== eventId) 
+      removeEvent: (eventId) => set((state) => ({
+        events: state.events.filter(event => event.id !== eventId)
       })),
       updateEvent: (eventId, eventData) => set((state) => ({
-        events: state.events.map(event => 
+        events: state.events.map(event =>
           event.id === eventId ? { ...event, ...eventData } : event
         )
       })),
-      
+
       // Azioni per le iscrizioni agli eventi
       registerForEvent: (eventId, userId) => set((state) => ({
-        events: state.events.map(event => 
-          event.id === eventId 
-            ? { 
-                ...event, 
-                participants: [...(event.participants || []), userId] 
-              } 
+        events: state.events.map(event =>
+          event.id === eventId
+            ? {
+                ...event,
+                participants: [...(event.participants || []), userId]
+              }
             : event
         )
       })),
       unregisterFromEvent: (eventId, userId) => set((state) => ({
-        events: state.events.map(event => 
-          event.id === eventId 
-            ? { 
-                ...event, 
-                participants: (event.participants || []).filter(id => id !== userId) 
-              } 
+        events: state.events.map(event =>
+          event.id === eventId
+            ? {
+                ...event,
+                participants: (event.participants || []).filter(id => id !== userId)
+              }
             : event
         )
       })),
-      
+
       // Azioni per la classifica e i punteggi
       updateScore: (userId, additionalScore) => set((state) => {
-        const updatedLeaderboard = state.leaderboard.map(user => 
-          user.id === userId 
-            ? { ...user, score: user.score + additionalScore } 
+        const updatedLeaderboard = state.leaderboard.map(user =>
+          user.id === userId
+            ? { ...user, score: user.score + additionalScore }
             : user
         );
-        
-        const updatedUsers = state.users.map(user => 
-          user.id === userId 
-            ? { ...user, score: user.score + additionalScore } 
+
+        const updatedUsers = state.users.map(user =>
+          user.id === userId
+            ? { ...user, score: user.score + additionalScore }
             : user
         );
-        
+
         return {
           leaderboard: updatedLeaderboard,
           users: updatedUsers,
-          currentUser: state.currentUser && state.currentUser.id === userId 
-            ? { ...state.currentUser, score: state.currentUser.score + additionalScore } 
+          currentUser: state.currentUser && state.currentUser.id === userId
+            ? { ...state.currentUser, score: state.currentUser.score + additionalScore }
             : state.currentUser
         };
       }),
-      
+
       // Azioni per la gestione delle skill
       updateSkill: (userId, skillName, level) => set((state) => {
         // Aggiorna la skill dell'utente nella classifica
-        const updatedLeaderboard = state.leaderboard.map(user => 
-          user.id === userId 
-            ? { 
-                ...user, 
-                skills: { 
-                  ...user.skills, 
-                  [skillName]: level 
-                } 
-              } 
+        const updatedLeaderboard = state.leaderboard.map(user =>
+          user.id === userId
+            ? {
+                ...user,
+                skills: {
+                  ...user.skills,
+                  [skillName]: level
+                }
+              }
             : user
         );
-        
+
         // Aggiorna la skill dell'utente nella lista degli utenti
-        const updatedUsers = state.users.map(user => 
-          user.id === userId 
-            ? { 
-                ...user, 
-                skills: { 
-                  ...user.skills, 
-                  [skillName]: level 
-                } 
-              } 
+        const updatedUsers = state.users.map(user =>
+          user.id === userId
+            ? {
+                ...user,
+                skills: {
+                  ...user.skills,
+                  [skillName]: level
+                }
+              }
             : user
         );
-        
+
         // Aggiorna anche l'utente corrente se necessario
         const updatedCurrentUser = state.currentUser && state.currentUser.id === userId
-          ? { 
-              ...state.currentUser, 
-              skills: { 
-                ...state.currentUser.skills, 
-                [skillName]: level 
+          ? {
+              ...state.currentUser,
+              skills: {
+                ...state.currentUser.skills,
+                [skillName]: level
               }
             }
           : state.currentUser;
-        
+
         return {
           leaderboard: updatedLeaderboard,
           users: updatedUsers,
@@ -266,4 +283,4 @@ export const useAppStore = create<AppState>()(
       }),
     }
   )
-); 
+);

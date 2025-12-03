@@ -44,19 +44,19 @@ const TeamBackgrounds = {
     <div className="absolute inset-0 opacity-25">
       <svg className="w-full h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
         <path d="M0,25 Q25,50 50,25 T100,25" fill="none" stroke="currentColor" strokeWidth="1">
-          <animate attributeName="d" dur="15s" repeatCount="indefinite" 
+          <animate attributeName="d" dur="15s" repeatCount="indefinite"
             values="M0,25 Q25,50 50,25 T100,25;
                     M0,35 Q25,60 50,35 T100,35;
                     M0,25 Q25,50 50,25 T100,25" />
         </path>
         <path d="M0,45 Q25,70 50,45 T100,45" fill="none" stroke="currentColor" strokeWidth="1">
-          <animate attributeName="d" dur="15s" repeatCount="indefinite" 
+          <animate attributeName="d" dur="15s" repeatCount="indefinite"
             values="M0,45 Q25,70 50,45 T100,45;
                     M0,55 Q25,80 50,55 T100,55;
                     M0,45 Q25,70 50,45 T100,45" />
         </path>
         <path d="M0,65 Q25,90 50,65 T100,65" fill="none" stroke="currentColor" strokeWidth="1">
-          <animate attributeName="d" dur="15s" repeatCount="indefinite" 
+          <animate attributeName="d" dur="15s" repeatCount="indefinite"
             values="M0,65 Q25,90 50,65 T100,65;
                     M0,75 Q25,100 50,75 T100,75;
                     M0,65 Q25,90 50,65 T100,65" />
@@ -68,19 +68,19 @@ const TeamBackgrounds = {
     <div className="absolute inset-0 opacity-25">
       <svg className="w-full h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
         <path d="M50,0 Q60,40 50,60 Q30,90 50,100 Q70,90 50,60 Q40,40 50,0" fill="none" stroke="currentColor" strokeWidth="1">
-          <animate attributeName="d" dur="7s" repeatCount="indefinite" 
+          <animate attributeName="d" dur="7s" repeatCount="indefinite"
             values="M50,0 Q60,40 50,60 Q30,90 50,100 Q70,90 50,60 Q40,40 50,0;
                     M50,0 Q65,35 55,60 Q35,95 50,100 Q65,95 45,60 Q35,35 50,0;
                     M50,0 Q60,40 50,60 Q30,90 50,100 Q70,90 50,60 Q40,40 50,0" />
         </path>
         <path d="M30,20 Q40,50 30,70 Q15,90 30,100 Q45,90 30,70 Q20,50 30,20" fill="none" stroke="currentColor" strokeWidth="1">
-          <animate attributeName="d" dur="6s" repeatCount="indefinite" 
+          <animate attributeName="d" dur="6s" repeatCount="indefinite"
             values="M30,20 Q40,50 30,70 Q15,90 30,100 Q45,90 30,70 Q20,50 30,20;
                     M30,20 Q45,45 35,70 Q20,95 30,100 Q40,95 25,70 Q15,45 30,20;
                     M30,20 Q40,50 30,70 Q15,90 30,100 Q45,90 30,70 Q20,50 30,20" />
         </path>
         <path d="M70,20 Q80,50 70,70 Q55,90 70,100 Q85,90 70,70 Q60,50 70,20" fill="none" stroke="currentColor" strokeWidth="1">
-          <animate attributeName="d" dur="8s" repeatCount="indefinite" 
+          <animate attributeName="d" dur="8s" repeatCount="indefinite"
             values="M70,20 Q80,50 70,70 Q55,90 70,100 Q85,90 70,70 Q60,50 70,20;
                     M70,20 Q85,45 75,70 Q60,95 70,100 Q80,95 65,70 Q55,45 70,20;
                     M70,20 Q80,50 70,70 Q55,90 70,100 Q85,90 70,70 Q60,50 70,20" />
@@ -92,19 +92,19 @@ const TeamBackgrounds = {
     <div className="absolute inset-0 opacity-25">
       <svg className="w-full h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
         <path d="M20,100 L20,50 L30,40 L40,50 L40,100 Z" fill="none" stroke="currentColor" strokeWidth="1">
-          <animate attributeName="d" dur="15s" repeatCount="indefinite" 
+          <animate attributeName="d" dur="15s" repeatCount="indefinite"
             values="M20,100 L20,50 L30,40 L40,50 L40,100 Z;
                     M20,100 L20,45 L30,35 L40,45 L40,100 Z;
                     M20,100 L20,50 L30,40 L40,50 L40,100 Z" />
         </path>
         <path d="M45,100 L45,40 L55,30 L65,40 L65,100 Z" fill="none" stroke="currentColor" strokeWidth="1">
-          <animate attributeName="d" dur="13s" repeatCount="indefinite" 
+          <animate attributeName="d" dur="13s" repeatCount="indefinite"
             values="M45,100 L45,40 L55,30 L65,40 L65,100 Z;
                     M45,100 L45,35 L55,25 L65,35 L65,100 Z;
                     M45,100 L45,40 L55,30 L65,40 L65,100 Z" />
         </path>
         <path d="M70,100 L70,45 L80,35 L90,45 L90,100 Z" fill="none" stroke="currentColor" strokeWidth="1">
-          <animate attributeName="d" dur="17s" repeatCount="indefinite" 
+          <animate attributeName="d" dur="17s" repeatCount="indefinite"
             values="M70,100 L70,45 L80,35 L90,45 L90,100 Z;
                     M70,100 L70,40 L80,30 L90,40 L90,100 Z;
                     M70,100 L70,45 L80,35 L90,45 L90,100 Z" />
@@ -117,24 +117,24 @@ const TeamBackgrounds = {
 export default function Home() {
   const { theme } = useTheme();
   const { users = [] } = useAppStore();
-  
+
   // Calcola il punteggio totale per team
   const teamScores = (users || []).reduce((acc, user) => {
     if (!acc[user.team]) acc[user.team] = 0;
     acc[user.team] += user.score;
     return acc;
   }, {} as Record<string, number>);
-  
+
   // Ordina i team per punteggio
   const sortedTeams = Object.entries(teamScores)
     .sort(([, scoreA], [, scoreB]) => scoreB - scoreA)
     .map(([team]) => team);
-  
+
   // Trova i top 5 utenti
   const topUsers = (users || [])
     .sort((a, b) => b.score - a.score)
     .slice(0, 5);
-  
+
   const getThemeStyles = () => {
     switch(theme) {
       case 'acqua':
@@ -191,9 +191,9 @@ export default function Home() {
         };
     }
   };
-  
+
   const styles = getThemeStyles();
-  
+
   const getTeamColor = (teamName: string) => {
     switch(teamName) {
       case 'acqua': return 'text-sky-200';
@@ -202,7 +202,7 @@ export default function Home() {
       default: return 'text-gray-200';
     }
   };
-  
+
   const getTeamBadge = (teamName: string) => {
     switch(teamName) {
       case 'acqua': return 'bg-sky-800 text-sky-100';
@@ -211,7 +211,7 @@ export default function Home() {
       default: return 'bg-gray-800 text-gray-100';
     }
   };
-  
+
   return (
     <div className={`container mx-auto px-4 py-8 mt-16 ${styles.textColor}`}>
       <section className="mb-12">
@@ -221,10 +221,10 @@ export default function Home() {
             Partecipa alle competizioni, migliora le tue skill, scala la classifica!
           </p>
         </div>
-        
+
         <div className={`${styles.mainGradient} rounded-2xl p-8 md:p-12 mb-12 relative overflow-hidden shadow-xl`}>
           {styles.backgroundElement}
-          
+
           <div className="relative z-10">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
               Prossimo grande evento
@@ -233,14 +233,14 @@ export default function Home() {
               Hackathon primaverile - Partecipa al nostro evento di punta e metti alla prova le tue capacità di problem solving in un ambiente competitivo e stimolante.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Link 
-                href="/eventi/special-event" 
+              <Link
+                href="/eventi/special-event"
                 className={`font-medium px-6 py-3 rounded-lg shadow-md ${styles.button} transition-colors`}
               >
                 Scopri di più
               </Link>
-              <Link 
-                href="/dashboard" 
+              <Link
+                href="/dashboard"
                 className={`font-medium px-6 py-3 rounded-lg ${styles.secondaryButton} transition-colors`}
               >
                 Vai alla Dashboard
@@ -248,7 +248,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        
+
         {sortedTeams.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
             {sortedTeams.map((team, index) => (
@@ -265,8 +265,8 @@ export default function Home() {
                   {index === 0 && <div className="text-2xl">👑</div>}
                 </div>
                 <p className={styles.textMuted}>
-                  {index === 0 
-                    ? 'Attualmente in testa alla classifica!' 
+                  {index === 0
+                    ? 'Attualmente in testa alla classifica!'
                     : `${index === 1 ? 'Secondo' : 'Terzo'} posto nella classifica a squadre.`}
                 </p>
                 <div className="mt-4">
@@ -283,7 +283,7 @@ export default function Home() {
           </div>
         )}
       </section>
-      
+
       <section className="mb-16">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Eventi in evidenza</h2>
@@ -291,7 +291,7 @@ export default function Home() {
             Vedi tutti gli eventi
           </Link>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {featuredEvents.map(event => (
             <div key={event.id} className={`${styles.cardBg} border ${styles.border} rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow`}>
@@ -318,8 +318,8 @@ export default function Home() {
                     <span className="mx-2">•</span>
                     <span>{event.time}</span>
                   </div>
-                  <Link 
-                    href={`/eventi/${event.id}`} 
+                  <Link
+                    href={`/eventi/${event.id}`}
                     className={`inline-block px-3 py-1 rounded-md text-sm font-medium ${styles.button}`}
                   >
                     Dettagli
@@ -330,7 +330,7 @@ export default function Home() {
           ))}
         </div>
       </section>
-      
+
       <section className="mb-16">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Classifica</h2>
@@ -338,7 +338,7 @@ export default function Home() {
             Classifica completa
           </Link>
         </div>
-        
+
         <div className={`${styles.cardBg} rounded-lg shadow-md overflow-hidden border ${styles.border}`}>
           <div className={`p-4 border-b ${styles.border}`}>
             <h3 className="font-medium">Top 5 Partecipanti</h3>
@@ -372,7 +372,7 @@ export default function Home() {
             <h2 className={`text-3xl font-bold mb-2 ${styles.textColor}`}>I Nostri Club</h2>
             <p className={`text-lg ${styles.textMuted}`}>Scopri e unisciti ai nostri club tematici</p>
           </div>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Club 1: Startup */}
             <div className={`rounded-lg overflow-hidden shadow-lg transition-transform hover:scale-105 ${styles.cardBg} border ${styles.border}`}>
@@ -382,14 +382,14 @@ export default function Home() {
                 </svg>
               </div>
               <div className="p-6">
-                <h3 className={`text-xl font-bold mb-2 ${styles.textColor}`}>Startup Club</h3>
-                <p className={`mb-4 ${styles.textMuted}`}>Sviluppa la tua idea imprenditoriale e trasformala in una startup di successo.</p>
+                <h3 className={`text-xl font-bold mb-2 ${styles.textColor}`}>Vibe It Club</h3>
+                <p className={`mb-4 ${styles.textMuted}`}>Trasforma un’idea in un prototipo funzionante in sole 24 ore. Brainstorming rapido, sviluppo collaborativo e lancio di un’app semplice ma concreta.</p>
                 <Link href="/club/startup" className={`inline-block px-4 py-2 rounded-lg ${styles.button}`}>
                   Scopri di più
                 </Link>
               </div>
             </div>
-            
+
             {/* Club 2: Sviluppo Gaming - Spaghettistudio */}
             <div className={`rounded-lg overflow-hidden shadow-lg transition-transform hover:scale-105 ${styles.cardBg} border ${styles.border}`}>
               <div className="h-40 bg-gradient-to-r from-pink-900 to-rose-800 relative flex items-center justify-center">
@@ -406,7 +406,7 @@ export default function Home() {
                 </Link>
               </div>
             </div>
-            
+
             {/* Club 3: Libro e Manga */}
             <div className={`rounded-lg overflow-hidden shadow-lg transition-transform hover:scale-105 ${styles.cardBg} border ${styles.border}`}>
               <div className="h-40 bg-gradient-to-r from-amber-900 to-yellow-800 relative flex items-center justify-center">
@@ -422,7 +422,7 @@ export default function Home() {
                 </Link>
               </div>
             </div>
-            
+
             {/* Club 4: Cybersecurity */}
             <div className={`rounded-lg overflow-hidden shadow-lg transition-transform hover:scale-105 ${styles.cardBg} border ${styles.border}`}>
               <div className="h-40 bg-gradient-to-r from-cyan-900 to-blue-800 relative flex items-center justify-center">

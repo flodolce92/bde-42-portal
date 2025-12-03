@@ -12,25 +12,25 @@ export interface EventProps {
   date: string;
   time: string;
   duration: string;
-  type: 'coding' | 'ctf' | 'quiz' | 'hackathon' | 'altro';
+  type: 'coding' | 'ctf' | 'quiz' | 'hackathon' | 'altro' | 'workshop';
   imageUrl?: string;
   isRegistered?: boolean;
 }
 
-export default function EventCard({ 
-  id, 
-  title, 
-  description, 
-  date, 
-  time, 
-  duration, 
-  type, 
+export default function EventCard({
+  id,
+  title,
+  description,
+  date,
+  time,
+  duration,
+  type,
   imageUrl,
   isRegistered = false
 }: EventProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const { theme } = useTheme();
-  
+
   // Determina se dovremmo usare il tema scuro basato sulla preferenza del sistema
   const isDarkMode = () => {
     // Controlla se è attiva la preferenza del sistema per il tema scuro
@@ -40,12 +40,12 @@ export default function EventCard({
     // Fallback: per default, impostiamo false
     return false;
   };
-  
+
   // Limitiamo la descrizione per la versione collassata
-  const shortDescription = description.length > 100 
-    ? description.substring(0, 100) + '...' 
+  const shortDescription = description.length > 100
+    ? description.substring(0, 100) + '...'
     : description;
-  
+
   const getEventTypeStyle = () => {
     switch(type) {
       case 'coding':
@@ -60,7 +60,7 @@ export default function EventCard({
         return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200';
     }
   };
-  
+
   const getEventTypeIcon = () => {
     switch(type) {
       case 'coding':
@@ -95,15 +95,15 @@ export default function EventCard({
         );
     }
   };
-  
+
   const formatDate = (dateString: string) => {
     const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'long', year: 'numeric' };
     return new Date(dateString).toLocaleDateString('it-IT', options);
   };
-  
+
   // Controlla se siamo in modalità scura
   const darkMode = isDarkMode();
-  
+
   // Ottieni il colore di highlight in base al tema
   const getTeamHoverColor = () => {
     switch(theme) {
@@ -117,7 +117,7 @@ export default function EventCard({
         return 'hover:border-sky-600 group-hover:text-sky-500';
     }
   };
-  
+
   // Ottieni il colore di sfondo per il bottone in base al tema
   const getTeamButtonColor = () => {
     switch(theme) {
@@ -131,7 +131,7 @@ export default function EventCard({
         return 'bg-sky-600 hover:bg-sky-700';
     }
   };
-  
+
   // Ottieni il colore per il bottone secondario in base al tema
   const getTeamSecondaryButtonColor = () => {
     switch(theme) {
@@ -145,20 +145,20 @@ export default function EventCard({
         return 'border-sky-500 text-sky-400 hover:bg-sky-900';
     }
   };
-  
+
   const teamHoverColor = getTeamHoverColor();
   const teamButtonColor = getTeamButtonColor();
   const teamSecondaryButtonColor = getTeamSecondaryButtonColor();
-  
+
   return (
-    <div 
+    <div
       className={`${
         darkMode
           ? 'bg-slate-800 border-slate-700'
           : 'bg-white'
       } rounded-lg shadow-md overflow-hidden border ${
-        isRegistered 
-          ? `border-${theme === 'acqua' ? 'sky' : theme === 'erba' ? 'green' : 'red'}-500` 
+        isRegistered
+          ? `border-${theme === 'acqua' ? 'sky' : theme === 'erba' ? 'green' : 'red'}-500`
           : 'border-gray-200 dark:border-slate-700'
       } transition-all duration-300 hover:shadow-lg group ${
         darkMode ? teamHoverColor.split(' ')[0] : ''
@@ -167,9 +167,9 @@ export default function EventCard({
       {imageUrl ? (
         <div className="h-40 w-full overflow-hidden relative">
           <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60 z-10"></div>
-          <Image 
-            src={imageUrl} 
-            alt={title} 
+          <Image
+            src={imageUrl}
+            alt={title}
             fill
             className="object-cover transition-transform duration-500 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -189,12 +189,12 @@ export default function EventCard({
           </span>
         </div>
       )}
-      
+
       <div className="p-5">
         <h3 className={`text-lg font-semibold mb-2 transition-colors ${darkMode ? 'text-white' : 'text-gray-900'} ${teamHoverColor.split(' ')[1]}`}>
           {title}
         </h3>
-        
+
         <div className={`mb-4 text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
           <div className="flex items-center mb-1">
             <svg className="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -209,32 +209,32 @@ export default function EventCard({
             <span className="truncate">{time} ({duration})</span>
           </div>
         </div>
-        
+
         <p className={`text-sm mb-4 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
           {isExpanded ? description : shortDescription}
         </p>
-        
+
         {description.length > 100 && (
-          <button 
+          <button
             onClick={() => setIsExpanded(!isExpanded)}
             className={`text-xs mb-4 transition-colors ${darkMode ? 'text-gray-400' : 'text-gray-600'} ${teamHoverColor.split(' ')[1].replace('group-hover:', 'hover:')}`}
           >
             {isExpanded ? 'Mostra meno' : 'Mostra di più'}
           </button>
         )}
-        
+
         <div className="flex justify-between mt-4">
-          <Link 
+          <Link
             href={`/eventi/${id}`}
             className={`px-4 py-2 rounded text-sm font-medium transition-colors ${
-              darkMode 
-                ? `${teamButtonColor} text-white` 
+              darkMode
+                ? `${teamButtonColor} text-white`
                 : `${teamButtonColor} text-white`
             }`}
           >
             Dettagli
           </Link>
-          
+
           {isRegistered ? (
             <span className="px-4 py-2 rounded text-sm font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 flex items-center">
               <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -243,9 +243,9 @@ export default function EventCard({
               Iscritto
             </span>
           ) : (
-            <button 
+            <button
               className={`px-4 py-2 rounded text-sm font-medium border transition-colors ${
-                darkMode 
+                darkMode
                   ? teamSecondaryButtonColor
                   : teamSecondaryButtonColor.replace('hover:bg-sky-900', 'hover:bg-sky-50')
                      .replace('hover:bg-red-900', 'hover:bg-red-50')
@@ -259,4 +259,4 @@ export default function EventCard({
       </div>
     </div>
   );
-} 
+}

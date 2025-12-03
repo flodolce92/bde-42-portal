@@ -6,41 +6,6 @@ import { useAppStore, Event, User } from '@/store';
 import Link from 'next/link';
 import Image from 'next/image';
 
-// Dati di esempio per mostrare la UI
-const mockEvents: Event[] = [
-  {
-    id: '1',
-    title: 'Hackathon - Web3 Challenge',
-    description: 'Partecipa al nostro hackathon di 48 ore dedicato allo sviluppo di applicazioni Web3. Metti alla prova le tue competenze in blockchain, smart contracts e applicazioni decentralizzate.\n\nDurante questa competizione avrai l&apos;opportunità di lavorare in team per creare soluzioni innovative basate sulla tecnologia blockchain. I progetti migliori saranno premiati e potranno essere presentati ad aziende del settore.\n\nRequisiti:\n- Conoscenza base di JavaScript/TypeScript\n- Interesse per la tecnologia blockchain\n- Spirito di squadra e creatività\n\nI partecipanti saranno divisi in team di 3-4 persone. È possibile partecipare con un team già formato o iscriversi individualmente ed essere assegnati a un team.',
-    date: '2024-06-15',
-    time: '10:00',
-    duration: '48h',
-    type: 'hackathon',
-    imageUrl: 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4',
-    participants: ['1', '2', '3']
-  },
-  {
-    id: '2',
-    title: 'CTF - Security Bootcamp',
-    description: 'Una competizione Capture The Flag incentrata sulla sicurezza informatica. Risolvi sfide di penetration testing, reverse engineering e web exploitation.\n\nQuesto evento è ideale per chi vuole mettere alla prova le proprie competenze in ambito cybersecurity. Le sfide saranno di vari livelli di difficoltà, adatte sia a principianti che esperti.\n\nCategorie di sfide:\n- Web Exploitation\n- Reverse Engineering\n- Binary Exploitation\n- Cryptography\n- Forensics\n\nI primi tre classificati riceveranno premi speciali e tutti i partecipanti guadagneranno punti per la classifica generale.',
-    date: '2024-05-20',
-    time: '14:30',
-    duration: '6h',
-    type: 'ctf',
-    imageUrl: 'https://images.unsplash.com/photo-1510511459019-5dda7724fd87',
-    participants: ['1', '4', '5']
-  },
-  {
-    id: '3',
-    title: 'Quiz - Algoritmi e Strutture Dati',
-    description: 'Test le tue conoscenze su algoritmi e strutture dati con questo quiz competitivo. Sfida gli altri studenti e scala la classifica!\n\nIl quiz sarà composto da domande teoriche e piccoli problemi da risolvere riguardanti algoritmi di ordinamento, strutture dati, complessità computazionale e pattern di progettazione.\n\nFormato:\n- 30 domande a risposta multipla\n- 5 problemi algoritmici da risolvere\n- Tempo limitato per ogni sezione\n\nAl termine del quiz ci sarà una sessione di discussione per analizzare le risposte e approfondire i concetti più complessi.',
-    date: '2024-05-05',
-    time: '16:00',
-    duration: '2h',
-    type: 'quiz'
-  }
-];
-
 const mockParticipants: User[] = [
   {
     id: '1',
@@ -87,7 +52,7 @@ export default function EventDetail({ params }: { params: Promise<{ id: string }
   const [participants, setParticipants] = useState<User[]>([]);
   const [isRegistered, setIsRegistered] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-  
+
   // Determina se dovremmo usare il tema scuro basato sulla preferenza del sistema
   const isDarkMode = () => {
     // Controlla se è attiva la preferenza del sistema per il tema scuro
@@ -97,33 +62,33 @@ export default function EventDetail({ params }: { params: Promise<{ id: string }
     // Fallback: per default, impostiamo false
     return false;
   };
-  
+
   // Controlla se siamo in modalità scura
   const darkMode = isDarkMode();
-  
+
   useEffect(() => {
     // In un'app reale, qui caricheremmo i dati dal backend
     // Per ora usiamo i dati di esempio
     const foundEvent = mockEvents.find(e => e.id === id);
     setEvent(foundEvent || null);
-    
+
     if (foundEvent?.participants) {
       // Filtra i partecipanti che sono presenti nell'evento
-      const eventParticipants = mockParticipants.filter(user => 
+      const eventParticipants = mockParticipants.filter(user =>
         foundEvent.participants?.includes(user.id)
       );
       setParticipants(eventParticipants);
-      
+
       // Verifica se l'utente corrente è registrato
       if (currentUser) {
         setIsRegistered(foundEvent.participants.includes(currentUser.id));
       }
     }
   }, [id, currentUser]);
-  
+
   const handleRegistration = () => {
     if (!event || !currentUser) return;
-    
+
     if (isRegistered) {
       setShowConfirmModal(true);
     } else {
@@ -133,20 +98,20 @@ export default function EventDetail({ params }: { params: Promise<{ id: string }
       setParticipants(prev => [...prev, currentUser]);
     }
   };
-  
+
   const handleUnregister = () => {
     if (!event || !currentUser) return;
-    
+
     // Annulla la registrazione dell'utente
     unregisterFromEvent(event.id, currentUser.id);
     setIsRegistered(false);
     setParticipants(prev => prev.filter(user => user.id !== currentUser.id));
     setShowConfirmModal(false);
   };
-  
+
   const getButtonClass = () => {
     const baseClasses = 'font-medium py-3 px-6 rounded-lg transition-colors shadow-md';
-    
+
     if (!isRegistered) {
       switch(theme) {
         case 'acqua':
@@ -159,10 +124,10 @@ export default function EventDetail({ params }: { params: Promise<{ id: string }
           return `${baseClasses} text-white bg-sky-700 hover:bg-sky-600`;
       }
     }
-    
+
     return `${baseClasses} bg-gray-700 text-gray-200 hover:bg-gray-600`;
   };
-  
+
   const getTeamColor = (team: string) => {
     switch (team) {
       case 'acqua': return 'bg-sky-700';
@@ -171,17 +136,18 @@ export default function EventDetail({ params }: { params: Promise<{ id: string }
       default: return 'bg-gray-700';
     }
   };
-  
+
   const getEventTypeLabel = (type: string) => {
     switch (type) {
       case 'coding': return 'Coding Challenge';
       case 'ctf': return 'Capture The Flag';
       case 'quiz': return 'Quiz';
       case 'hackathon': return 'Hackathon';
+	  case 'workshop': return 'Workshop';
       default: return 'Altro';
     }
   };
-  
+
   const getThemeStyles = () => {
     switch(theme) {
       case 'acqua':
@@ -197,7 +163,7 @@ export default function EventDetail({ params }: { params: Promise<{ id: string }
             <div className="absolute right-0 bottom-0 w-32 h-32 opacity-20">
               <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                 <path d="M0,25 Q25,0 50,25 T100,25 T150,25" fill="none" stroke="white" strokeWidth="5">
-                  <animate attributeName="d" dur="10s" repeatCount="indefinite" 
+                  <animate attributeName="d" dur="10s" repeatCount="indefinite"
                     values="M0,25 Q25,0 50,25 T100,25;
                             M0,25 Q25,50 50,25 T100,25;
                             M0,25 Q25,0 50,25 T100,25" />
@@ -219,7 +185,7 @@ export default function EventDetail({ params }: { params: Promise<{ id: string }
             <div className="absolute right-0 bottom-0 w-32 h-32 opacity-20">
               <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                 <path d="M10,90 Q30,70 50,90 T90,90" fill="none" stroke="white" strokeWidth="5">
-                  <animate attributeName="d" dur="10s" repeatCount="indefinite" 
+                  <animate attributeName="d" dur="10s" repeatCount="indefinite"
                     values="M10,90 Q30,70 50,90 T90,90;
                             M10,90 Q30,110 50,90 T90,90;
                             M10,90 Q30,70 50,90 T90,90" />
@@ -241,7 +207,7 @@ export default function EventDetail({ params }: { params: Promise<{ id: string }
             <div className="absolute right-0 bottom-0 w-32 h-32 opacity-20">
               <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                 <path d="M50,10 Q60,40 90,50 Q60,60 50,90 Q40,60 10,50 Q40,40 50,10" fill="none" stroke="white" strokeWidth="5">
-                  <animate attributeName="d" dur="8s" repeatCount="indefinite" 
+                  <animate attributeName="d" dur="8s" repeatCount="indefinite"
                     values="M50,10 Q60,40 90,50 Q60,60 50,90 Q40,60 10,50 Q40,40 50,10;
                             M50,10 Q70,40 90,50 Q70,60 50,90 Q30,60 10,50 Q30,40 50,10;
                             M50,10 Q60,40 90,50 Q60,60 50,90 Q40,60 10,50 Q40,40 50,10" />
@@ -263,7 +229,7 @@ export default function EventDetail({ params }: { params: Promise<{ id: string }
             <div className="absolute right-0 bottom-0 w-32 h-32 opacity-20">
               <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                 <path d="M0,25 Q25,0 50,25 T100,25 T150,25" fill="none" stroke="white" strokeWidth="5">
-                  <animate attributeName="d" dur="10s" repeatCount="indefinite" 
+                  <animate attributeName="d" dur="10s" repeatCount="indefinite"
                     values="M0,25 Q25,0 50,25 T100,25;
                             M0,25 Q25,50 50,25 T100,25;
                             M0,25 Q25,0 50,25 T100,25" />
@@ -274,15 +240,15 @@ export default function EventDetail({ params }: { params: Promise<{ id: string }
         };
     }
   };
-  
+
   const themeStyles = getThemeStyles();
-  
+
   if (!event) {
     return (
       <div className={`container mx-auto px-4 py-16 text-center ${themeStyles.textDefault}`}>
         <h1 className="text-2xl font-bold mb-4">Evento non trovato</h1>
         <p className="mb-8">L&apos evento che stai cercando non esiste o è stato rimosso.</p>
-        <Link 
+        <Link
           href="/eventi"
           className={`px-6 py-3 rounded-lg ${getButtonClass()}`}
         >
@@ -291,11 +257,11 @@ export default function EventDetail({ params }: { params: Promise<{ id: string }
       </div>
     );
   }
-  
+
   return (
     <div className={`container mx-auto px-4 py-8 mt-16 ${themeStyles.textDefault}`}>
       <div className="mb-4">
-        <Link 
+        <Link
           href="/eventi"
           className={`flex items-center ${themeStyles.textDefault} hover:opacity-75`}
         >
@@ -305,12 +271,12 @@ export default function EventDetail({ params }: { params: Promise<{ id: string }
           Torna agli eventi
         </Link>
       </div>
-      
+
       {/* Header dell'evento */}
       <div className={`relative overflow-hidden rounded-lg shadow-xl mb-8 border ${themeStyles.cardBorder}`}>
         <div className={`relative ${themeStyles.bgGradient} p-6 ${themeStyles.textColor}`}>
           {themeStyles.decoration}
-          
+
           <div className="relative z-10">
             <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4 mb-6">
               <div>
@@ -324,7 +290,7 @@ export default function EventDetail({ params }: { params: Promise<{ id: string }
                   </span>
                 </div>
               </div>
-              
+
               <button
                 onClick={handleRegistration}
                 className={`${getButtonClass()}`}
@@ -333,7 +299,7 @@ export default function EventDetail({ params }: { params: Promise<{ id: string }
                 {isRegistered ? 'Annulla iscrizione' : 'Iscriviti all&apos;evento'}
               </button>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
               <div className="flex items-center">
                 <svg className="w-5 h-5 mr-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -342,15 +308,15 @@ export default function EventDetail({ params }: { params: Promise<{ id: string }
                 <div>
                   <div className="text-sm text-white text-opacity-80">Data</div>
                   <div className="font-medium">
-                    {new Date(event.date).toLocaleDateString('it-IT', { 
-                      day: 'numeric', 
-                      month: 'long', 
-                      year: 'numeric' 
+                    {new Date(event.date).toLocaleDateString('it-IT', {
+                      day: 'numeric',
+                      month: 'long',
+                      year: 'numeric'
                     })}
                   </div>
                 </div>
               </div>
-              
+
               <div className="flex items-center">
                 <svg className="w-5 h-5 mr-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -360,7 +326,7 @@ export default function EventDetail({ params }: { params: Promise<{ id: string }
                   <div className="font-medium">{event.time}</div>
                 </div>
               </div>
-              
+
               <div className="flex items-center">
                 <svg className="w-5 h-5 mr-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -373,7 +339,7 @@ export default function EventDetail({ params }: { params: Promise<{ id: string }
             </div>
           </div>
         </div>
-        
+
         {event?.imageUrl && (
           <div className="relative w-full h-64 mb-6 rounded-lg overflow-hidden">
             <Image
@@ -385,7 +351,7 @@ export default function EventDetail({ params }: { params: Promise<{ id: string }
             />
           </div>
         )}
-        
+
         <div className={`p-6 ${themeStyles.cardBg}`}>
           <div className="prose max-w-none">
             {event.description.split('\n').map((paragraph, index) => (
@@ -396,12 +362,12 @@ export default function EventDetail({ params }: { params: Promise<{ id: string }
           </div>
         </div>
       </div>
-      
+
       {/* Partecipanti */}
       <div className={`rounded-lg shadow-md overflow-hidden mb-8 border ${themeStyles.cardBorder} ${themeStyles.cardBg}`}>
         <div className="p-6">
           <h2 className="text-xl font-bold mb-6">Partecipanti</h2>
-          
+
           {participants.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {participants.map(user => (
@@ -414,8 +380,8 @@ export default function EventDetail({ params }: { params: Promise<{ id: string }
                   <div>
                     <div className="font-medium">{user.username}</div>
                     <div className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-                      {user.team === 'acqua' ? 'Team Acqua' : 
-                       user.team === 'erba' ? 'Team Erba' : 
+                      {user.team === 'acqua' ? 'Team Acqua' :
+                       user.team === 'erba' ? 'Team Erba' :
                        'Team Fuoco'}
                     </div>
                   </div>
@@ -429,18 +395,18 @@ export default function EventDetail({ params }: { params: Promise<{ id: string }
           )}
         </div>
       </div>
-      
+
       {/* Modale di conferma */}
       {showConfirmModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className={`${themeStyles.cardBg} rounded-lg shadow-xl max-w-md w-full p-6`}>
             <h3 className="text-xl font-bold mb-4">Conferma annullamento</h3>
             <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'} mb-6`}>
-              Sei sicuro di voler annullare la tua iscrizione a questo evento? 
+              Sei sicuro di voler annullare la tua iscrizione a questo evento?
               Questa azione non può essere annullata.
             </p>
             <div className="flex justify-end gap-3">
-              <button 
+              <button
                 onClick={() => setShowConfirmModal(false)}
                 className={`px-4 py-2 border rounded-lg ${
                   darkMode ? 'border-gray-600 hover:bg-gray-700' : 'border-gray-300 hover:bg-gray-50'
@@ -448,7 +414,7 @@ export default function EventDetail({ params }: { params: Promise<{ id: string }
               >
                 Annulla
               </button>
-              <button 
+              <button
                 onClick={handleUnregister}
                 className={`px-4 py-2 rounded-lg ${
                   theme === 'acqua' ? (darkMode ? 'bg-sky-700 hover:bg-sky-600' : 'bg-sky-500 hover:bg-sky-400') :
@@ -464,4 +430,4 @@ export default function EventDetail({ params }: { params: Promise<{ id: string }
       )}
     </div>
   );
-} 
+}

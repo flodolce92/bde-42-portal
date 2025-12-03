@@ -5,8 +5,19 @@ import { useTheme } from '@/hooks/useTheme';
 import EventCard from '@/components/EventCard';
 import { useAppStore, Event } from '@/store';
 
-// Dati di esempio per gli eventi
-const mockEvents: Event[] = [
+
+
+type FilterType = 'all' | 'coding' | 'ctf' | 'quiz' | 'hackathon' | 'workshop';
+
+export default function EventiPage() {
+  const { theme } = useTheme();
+  const { currentUser } = useAppStore();
+  const [events, setEvents] = useState<Event[]>([]);
+  const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
+  const [activeFilter, setActiveFilter] = useState<FilterType>('all');
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const mockEvents: Event[] = [
   {
     id: '1',
     title: 'Hackathon - Web3 Challenge',
@@ -15,7 +26,9 @@ const mockEvents: Event[] = [
     time: '10:00',
     duration: '48h',
     type: 'hackathon',
-    imageUrl: 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4'
+	club: 'none',
+    imageUrl: 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4',
+    participants: ['1', '2', '3']
   },
   {
     id: '2',
@@ -25,60 +38,24 @@ const mockEvents: Event[] = [
     time: '14:30',
     duration: '6h',
     type: 'ctf',
-    imageUrl: 'https://images.unsplash.com/photo-1510511459019-5dda7724fd87'
+	club: 'Cybersecurity',
+    imageUrl: 'https://images.unsplash.com/photo-1510511459019-5dda7724fd87',
+    participants: ['1', '4', '5']
   },
   {
-    id: '3',
-    title: 'Quiz - Algoritmi e Strutture Dati',
-    description: 'Test le tue conoscenze su algoritmi e strutture dati con questo quiz competitivo. Sfida gli altri studenti e scala la classifica!',
-    date: '2024-05-05',
-    time: '16:00',
-    duration: '2h',
-    type: 'quiz',
-    imageUrl: 'https://images.unsplash.com/photo-1601933470096-0e34634ffcde'
-  },
-  {
-    id: '4',
-    title: 'Coding Challenge - Ottimizzazione',
-    description: 'Sfida di programmazione focalizzata sull\'ottimizzazione degli algoritmi. Risolvi problemi complessi nel minor tempo e con il codice più efficiente.',
-    date: '2024-07-10',
-    time: '15:00',
-    duration: '3h',
-    type: 'coding',
-    imageUrl: 'https://images.unsplash.com/photo-1623479322729-28b25c16b011'
-  },
-  {
-    id: '5',
-    title: 'Hackathon - AI & Data Science',
-    description: 'Un hackathon dedicato all\'intelligenza artificiale e alla data science. Crea modelli innovativi per risolvere problemi reali utilizzando dataset forniti.',
-    date: '2024-08-25',
-    time: '09:00',
-    duration: '36h',
-    type: 'hackathon',
-    imageUrl: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40'
-  },
-  {
-    id: '6',
-    title: 'CTF - Web Security',
-    description: 'Capture The Flag focalizzato sulla sicurezza web. Trova vulnerabilità, sfrutta debolezze e proteggi applicazioni web da attacchi comuni.',
-    date: '2024-06-05',
-    time: '18:00',
-    duration: '4h',
-    type: 'ctf',
-    imageUrl: 'https://images.unsplash.com/photo-1548092372-0d1bd40894a3'
+	id: '3',
+	title: 'Workshop di Design Thinking',
+	description: 'Partecipa a un workshop interattivo di Design Thinking per imparare a risolvere problemi complessi attraverso l\'approccio centrato sull\'utente.',
+	date: '2026-05-01',
+	time: '15:00',
+	duration: '3h',
+	type: 'workshop',
+	club: 'vibe it',
+	imageUrl: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d',
+	participants: ['2', '3', '5']
   }
 ];
 
-type FilterType = 'all' | 'coding' | 'ctf' | 'quiz' | 'hackathon' | 'altro';
-
-export default function EventiPage() {
-  const { theme } = useTheme();
-  const { currentUser } = useAppStore();
-  const [events, setEvents] = useState<Event[]>([]);
-  const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
-  const [activeFilter, setActiveFilter] = useState<FilterType>('all');
-  const [searchTerm, setSearchTerm] = useState('');
-  
   // Carica gli eventi quando il componente viene montato
   useEffect(() => {
     // In un'app reale, qui caricheremmo i dati dal backend
@@ -86,16 +63,16 @@ export default function EventiPage() {
     setEvents(mockEvents);
     setFilteredEvents(mockEvents);
   }, []);
-  
+
   // Filtra gli eventi in base al tipo selezionato e al termine di ricerca
   useEffect(() => {
     let result = events;
-    
+
     // Applica il filtro per tipo
     if (activeFilter !== 'all') {
       result = result.filter(event => event.type === activeFilter);
     }
-    
+
     // Applica il filtro per termine di ricerca
     if (searchTerm.trim() !== '') {
       const term = searchTerm.toLowerCase();
@@ -104,14 +81,14 @@ export default function EventiPage() {
         event.description.toLowerCase().includes(term)
       );
     }
-    
+
     setFilteredEvents(result);
   }, [events, activeFilter, searchTerm]);
-  
+
   const getButtonClass = (filterType: FilterType) => {
     const isActive = activeFilter === filterType;
     const baseClasses = 'px-4 py-2 rounded-lg text-sm font-medium transition-colors';
-    
+
     if (isActive) {
       switch(theme) {
         case 'acqua':
@@ -124,16 +101,16 @@ export default function EventiPage() {
           return `${baseClasses} bg-sky-700 text-white`;
       }
     }
-    
+
     return `${baseClasses} bg-slate-800 text-gray-300 hover:bg-slate-700`;
   };
-  
+
   // Verifica se l'utente è registrato a un evento
   const isUserRegistered = (eventId: string) => {
     const event = events.find(e => e.id === eventId);
     return event?.participants?.includes(currentUser?.id || '') || false;
   };
-  
+
   // Funzione per ottenere gli stili basati sul tema
   const getThemeStyles = () => {
     switch(theme) {
@@ -183,9 +160,9 @@ export default function EventiPage() {
         };
     }
   };
-  
+
   const styles = getThemeStyles();
-  
+
   return (
     <div className={`min-h-screen ${styles.mainGradient} pt-8 pb-16`}>
       <div className="container mx-auto px-4 py-8">
@@ -193,7 +170,7 @@ export default function EventiPage() {
           <h1 className={`text-3xl font-bold mb-2 ${styles.textColor}`}>Eventi</h1>
           <p className={styles.textMuted}>Scopri tutti gli eventi in programma e iscriviti per partecipare!</p>
         </div>
-        
+
         {/* Filtri e ricerca */}
         <div className={`${styles.cardBg} rounded-lg shadow-md p-6 mb-8 border ${styles.border}`}>
           <div className="mb-6">
@@ -209,7 +186,7 @@ export default function EventiPage() {
               className="w-full px-4 py-2 border bg-slate-800 border-slate-700 rounded-lg focus:ring-2 focus:outline-none focus:ring-blue-500 text-gray-200"
             />
           </div>
-          
+
           <div>
             <h3 className={`text-sm font-medium ${styles.textColor} mb-3`}>Filtra per tipo</h3>
             <div className="flex flex-wrap gap-2">
@@ -244,15 +221,15 @@ export default function EventiPage() {
                 Hackathon
               </button>
               <button
-                onClick={() => setActiveFilter('altro')}
-                className={getButtonClass('altro')}
+                onClick={() => setActiveFilter('workshop')}
+                className={getButtonClass('workshop')}
               >
-                Altro
+                Workshop
               </button>
             </div>
           </div>
         </div>
-        
+
         {/* Lista eventi */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredEvents.length > 0 ? (
@@ -283,4 +260,4 @@ export default function EventiPage() {
       </div>
     </div>
   );
-} 
+}

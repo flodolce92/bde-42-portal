@@ -14,6 +14,7 @@ const mockEvents: Event[] = [
     time: '10:00',
     duration: '48h',
     type: 'hackathon',
+	club: 'none',
     imageUrl: 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4',
     participants: ['1', '2', '3']
   },
@@ -25,8 +26,21 @@ const mockEvents: Event[] = [
     time: '14:30',
     duration: '6h',
     type: 'ctf',
+	club: 'Cybersecurity',
     imageUrl: 'https://images.unsplash.com/photo-1510511459019-5dda7724fd87',
     participants: ['1', '4', '5']
+  },
+  {
+	id: '3',
+	title: 'Workshop di Design Thinking',
+	description: 'Partecipa a un workshop interattivo di Design Thinking per imparare a risolvere problemi complessi attraverso l\'approccio centrato sull\'utente.',
+	date: '2026-05-01',
+	time: '15:00',
+	duration: '3h',
+	type: 'workshop',
+	club: 'vibe it',
+	imageUrl: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d',
+	participants: ['2', '3', '5']
   }
 ];
 
@@ -71,11 +85,11 @@ const mockUsers: User[] = [
 export default function AdminPage() {
   const { theme } = useTheme();
   const { addEvent, updateScore, updateSkill } = useAppStore();
-  
+
   const [events, setEvents] = useState<Event[]>([]);
   const [users, setUsers] = useState<User[]>([]);
   const [activeTab, setActiveTab] = useState<'createEvent' | 'manageEvents' | 'assignPoints'>('createEvent');
-  
+
   // Form per nuovi eventi
   const [newEvent, setNewEvent] = useState<Omit<Event, 'id'>>({
     title: '',
@@ -86,14 +100,14 @@ export default function AdminPage() {
     type: 'coding',
     imageUrl: ''
   });
-  
+
   // Gestione punti
   const [selectedEvent, setSelectedEvent] = useState<string>('');
   const [selectedUser, setSelectedUser] = useState<string>('');
   const [pointsToAdd, setPointsToAdd] = useState<number>(10);
   const [skillToImprove, setSkillToImprove] = useState<string>('Coding');
   const [skillLevel, setSkillLevel] = useState<number>(5);
-  
+
   // Carica gli eventi e gli utenti quando il componente viene montato
   useEffect(() => {
     // In un'app reale, qui caricheremmo i dati dal backend
@@ -101,30 +115,30 @@ export default function AdminPage() {
     setEvents(mockEvents);
     setUsers(mockUsers);
   }, []);
-  
+
   // Gestisci il form per un nuovo evento
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setNewEvent(prev => ({ ...prev, [name]: value }));
   };
-  
+
   // Invia il form per creare un nuovo evento
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // In un'app reale, qui invieremmo i dati al backend
     const event: Event = {
       id: Date.now().toString(), // generiamo un ID temporaneo
       ...newEvent,
       participants: []
     };
-    
+
     // Aggiungi l'evento allo store
     addEvent(event);
-    
+
     // Aggiorna la lista locale degli eventi
     setEvents(prev => [...prev, event]);
-    
+
     // Resetta il form
     setNewEvent({
       title: '',
@@ -135,90 +149,90 @@ export default function AdminPage() {
       type: 'coding',
       imageUrl: ''
     });
-    
+
     alert('Evento creato con successo!');
   };
-  
+
   // Funzione per assegnare punti a un utente
   const handleAssignPoints = () => {
     if (!selectedUser || !selectedEvent) {
       alert('Seleziona un utente e un evento');
       return;
     }
-    
+
     // In un'app reale, qui invieremmo i dati al backend
     updateScore(selectedUser, pointsToAdd);
-    
+
     // Aggiorna l'utente localmente
-    setUsers(prev => prev.map(user => 
+    setUsers(prev => prev.map(user =>
       user.id === selectedUser ? { ...user, score: user.score + pointsToAdd } : user
     ));
-    
+
     alert(`Punti assegnati con successo! (${pointsToAdd} punti a ${users.find(u => u.id === selectedUser)?.username})`);
   };
-  
+
   // Funzione per migliorare una skill di un utente
   const handleImproveSkill = () => {
     if (!selectedUser) {
       alert('Seleziona un utente');
       return;
     }
-    
+
     // In un'app reale, qui invieremmo i dati al backend
     updateSkill(selectedUser, skillToImprove, skillLevel);
-    
+
     // Aggiorna l'utente localmente
-    setUsers(prev => prev.map(user => 
-      user.id === selectedUser ? { 
-        ...user, 
-        skills: { 
-          ...user.skills, 
-          [skillToImprove]: skillLevel 
-        } 
+    setUsers(prev => prev.map(user =>
+      user.id === selectedUser ? {
+        ...user,
+        skills: {
+          ...user.skills,
+          [skillToImprove]: skillLevel
+        }
       } : user
     ));
-    
+
     alert(`Skill migliorata con successo! (${skillToImprove}: ${skillLevel} a ${users.find(u => u.id === selectedUser)?.username})`);
   };
-  
+
   const getTabButtonClass = (tabName: 'createEvent' | 'manageEvents' | 'assignPoints') => {
     const isActive = activeTab === tabName;
     const baseClasses = 'px-4 py-2 font-medium';
-    
+
     if (isActive) {
       return `${baseClasses} border-b-2 ${
-        theme === 'acqua' ? 'border-blue-600 text-blue-600' : 
-        theme === 'erba' ? 'border-green-600 text-green-600' : 
+        theme === 'acqua' ? 'border-blue-600 text-blue-600' :
+        theme === 'erba' ? 'border-green-600 text-green-600' :
         'border-red-600 text-red-600'
       }`;
     }
-    
+
     return `${baseClasses} text-gray-500 hover:text-gray-700`;
   };
-  
+
   const getPrimaryButtonClass = () => {
     return `w-full text-white font-medium py-2 px-4 rounded ${
-      theme === 'acqua' ? 'bg-blue-600 hover:bg-blue-700' : 
-      theme === 'erba' ? 'bg-green-600 hover:bg-green-700' : 
+      theme === 'acqua' ? 'bg-blue-600 hover:bg-blue-700' :
+      theme === 'erba' ? 'bg-green-600 hover:bg-green-700' :
       'bg-red-600 hover:bg-red-700'
     }`;
   };
-  
+
   const getSecondaryButtonClass = () => {
     return `w-full font-medium py-2 px-4 rounded border ${
-      theme === 'acqua' ? 'border-blue-600 text-blue-600 hover:bg-blue-50' : 
-      theme === 'erba' ? 'border-green-600 text-green-600 hover:bg-green-50' : 
+      theme === 'acqua' ? 'border-blue-600 text-blue-600 hover:bg-blue-50' :
+      theme === 'erba' ? 'border-green-600 text-green-600 hover:bg-green-50' :
       'border-red-600 text-red-600 hover:bg-red-50'
     }`;
   };
-  
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2">Pannello Admin</h1>
         <p className="text-gray-600">Gestisci eventi, utenti e punteggi delle competizioni.</p>
       </div>
-      
+
       {/* Tabs */}
       <div className="mb-8">
         <div className="flex border-b border-gray-200">
@@ -242,14 +256,14 @@ export default function AdminPage() {
           </button>
         </div>
       </div>
-      
+
       {/* Tab content */}
       <div>
         {/* Create Event Tab */}
         {activeTab === 'createEvent' && (
           <div className="bg-white rounded-lg shadow-md p-6">
             <h2 className="text-xl font-bold mb-6">Crea un nuovo evento</h2>
-            
+
             <form onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
@@ -266,7 +280,7 @@ export default function AdminPage() {
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:outline-none focus:ring-blue-500"
                   />
                 </div>
-                
+
                 <div>
                   <label htmlFor="type" className="block text-sm font-medium text-gray-700 mb-1">
                     Tipo di evento
@@ -283,10 +297,11 @@ export default function AdminPage() {
                     <option value="ctf">CTF</option>
                     <option value="quiz">Quiz</option>
                     <option value="hackathon">Hackathon</option>
+					<option value="workshop">Workshop</option>
                     <option value="altro">Altro</option>
                   </select>
                 </div>
-                
+
                 <div>
                   <label htmlFor="date" className="block text-sm font-medium text-gray-700 mb-1">
                     Data
@@ -301,7 +316,7 @@ export default function AdminPage() {
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:outline-none focus:ring-blue-500"
                   />
                 </div>
-                
+
                 <div>
                   <label htmlFor="time" className="block text-sm font-medium text-gray-700 mb-1">
                     Orario
@@ -316,7 +331,7 @@ export default function AdminPage() {
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:outline-none focus:ring-blue-500"
                   />
                 </div>
-                
+
                 <div>
                   <label htmlFor="duration" className="block text-sm font-medium text-gray-700 mb-1">
                     Durata (es. 2h, 30min, 48h)
@@ -331,7 +346,7 @@ export default function AdminPage() {
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:outline-none focus:ring-blue-500"
                   />
                 </div>
-                
+
                 <div>
                   <label htmlFor="imageUrl" className="block text-sm font-medium text-gray-700 mb-1">
                     URL Immagine (opzionale)
@@ -345,7 +360,7 @@ export default function AdminPage() {
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:outline-none focus:ring-blue-500"
                   />
                 </div>
-                
+
                 <div className="md:col-span-2">
                   <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
                     Descrizione
@@ -360,7 +375,7 @@ export default function AdminPage() {
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:outline-none focus:ring-blue-500"
                   />
                 </div>
-                
+
                 <div className="md:col-span-2">
                   <button
                     type="submit"
@@ -373,12 +388,12 @@ export default function AdminPage() {
             </form>
           </div>
         )}
-        
+
         {/* Manage Events Tab */}
         {activeTab === 'manageEvents' && (
           <div className="bg-white rounded-lg shadow-md overflow-hidden">
             <h2 className="text-xl font-bold p-6 border-b border-gray-200">Eventi attivi</h2>
-            
+
             {events.length > 0 ? (
               <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
@@ -415,10 +430,10 @@ export default function AdminPage() {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                            event.type === 'coding' ? 'bg-purple-100 text-purple-800' : 
-                            event.type === 'ctf' ? 'bg-yellow-100 text-yellow-800' : 
-                            event.type === 'quiz' ? 'bg-blue-100 text-blue-800' : 
-                            event.type === 'hackathon' ? 'bg-green-100 text-green-800' : 
+                            event.type === 'coding' ? 'bg-purple-100 text-purple-800' :
+                            event.type === 'ctf' ? 'bg-yellow-100 text-yellow-800' :
+                            event.type === 'quiz' ? 'bg-blue-100 text-blue-800' :
+                            event.type === 'hackathon' ? 'bg-green-100 text-green-800' :
                             'bg-gray-100 text-gray-800'
                           }`}>
                             {event.type.toUpperCase()}
@@ -449,13 +464,13 @@ export default function AdminPage() {
             )}
           </div>
         )}
-        
+
         {/* Assign Points Tab */}
         {activeTab === 'assignPoints' && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-white rounded-lg shadow-md p-6">
               <h2 className="text-xl font-bold mb-6">Assegna punti</h2>
-              
+
               <div className="space-y-4">
                 <div>
                   <label htmlFor="eventSelect" className="block text-sm font-medium text-gray-700 mb-1">
@@ -475,7 +490,7 @@ export default function AdminPage() {
                     ))}
                   </select>
                 </div>
-                
+
                 <div>
                   <label htmlFor="userSelect" className="block text-sm font-medium text-gray-700 mb-1">
                     Seleziona utente
@@ -494,7 +509,7 @@ export default function AdminPage() {
                     ))}
                   </select>
                 </div>
-                
+
                 <div>
                   <label htmlFor="pointsInput" className="block text-sm font-medium text-gray-700 mb-1">
                     Punti da assegnare
@@ -509,7 +524,7 @@ export default function AdminPage() {
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:outline-none focus:ring-blue-500"
                   />
                 </div>
-                
+
                 <button
                   onClick={handleAssignPoints}
                   className={getPrimaryButtonClass()}
@@ -519,10 +534,10 @@ export default function AdminPage() {
                 </button>
               </div>
             </div>
-            
+
             <div className="bg-white rounded-lg shadow-md p-6">
               <h2 className="text-xl font-bold mb-6">Migliora skill</h2>
-              
+
               <div className="space-y-4">
                 <div>
                   <label htmlFor="userSelectSkill" className="block text-sm font-medium text-gray-700 mb-1">
@@ -542,7 +557,7 @@ export default function AdminPage() {
                     ))}
                   </select>
                 </div>
-                
+
                 <div>
                   <label htmlFor="skillSelect" className="block text-sm font-medium text-gray-700 mb-1">
                     Seleziona skill
@@ -560,7 +575,7 @@ export default function AdminPage() {
                     <option value="Problem Solving">Problem Solving</option>
                   </select>
                 </div>
-                
+
                 <div>
                   <label htmlFor="skillLevelInput" className="block text-sm font-medium text-gray-700 mb-1">
                     Nuovo livello (1-100)
@@ -575,7 +590,7 @@ export default function AdminPage() {
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:outline-none focus:ring-blue-500"
                   />
                 </div>
-                
+
                 <button
                   onClick={handleImproveSkill}
                   className={getSecondaryButtonClass()}
@@ -590,4 +605,4 @@ export default function AdminPage() {
       </div>
     </div>
   );
-} 
+}
