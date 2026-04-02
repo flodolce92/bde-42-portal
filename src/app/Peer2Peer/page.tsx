@@ -1,9 +1,8 @@
-"use client";
+'use client';
 
 import React, { useRef, useState, MouseEvent } from 'react';
 import { useAppStore, Event as AppEvent } from '@/store';
 import { useTheme } from '@/hooks/useTheme';
-import Link from 'next/link';
 
 interface CyberCardProps {
 	event: AppEvent;
@@ -25,12 +24,16 @@ function CyberCard({ event }: CyberCardProps) {
 		const rotateX = ((y - centerY) / centerY) * -10;
 		const rotateY = ((x - centerX) / centerX) * 10;
 
-		setTransform(`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`);
+		setTransform(
+			`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`,
+		);
 		setGlarePos({ x: (x / rect.width) * 100, y: (y / rect.height) * 100 });
 	};
 
 	const handleMouseLeave = () => {
-		setTransform('perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)');
+		setTransform(
+			'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)',
+		);
 		setGlarePos({ x: 50, y: 50 });
 	};
 
@@ -53,20 +56,21 @@ function CyberCard({ event }: CyberCardProps) {
 					className="cyber-card"
 					onMouseMove={handleMouseMove}
 					onMouseLeave={handleMouseLeave}
-					style={{ transform, transition: 'transform 0.1s ease-out' }}
-				>
+					style={{ transform, transition: 'transform 0.1s ease-out' }}>
 					<div className="card-content">
 						{/* Glare effect */}
 						<div
 							className="card-glare"
 							style={{
 								background: `radial-gradient(circle at ${glarePos.x}% ${glarePos.y}%, rgba(255,255,255,0.3) 0%, transparent 50%)`,
-							}}
-						></div>
+							}}></div>
 
 						{/* Cyber lines */}
 						<div className="cyber-lines">
-							<span></span><span></span><span></span><span></span>
+							<span></span>
+							<span></span>
+							<span></span>
+							<span></span>
 						</div>
 
 						{/* Scan line */}
@@ -74,7 +78,10 @@ function CyberCard({ event }: CyberCardProps) {
 
 						{/* Corner elements */}
 						<div className="corner-elements">
-							<span></span><span></span><span></span><span></span>
+							<span></span>
+							<span></span>
+							<span></span>
+							<span></span>
 						</div>
 
 						{/* Content */}
@@ -106,8 +113,7 @@ function CyberCard({ event }: CyberCardProps) {
 											target="_blank"
 											rel="noopener noreferrer"
 											download
-											className="download-link"
-										>
+											className="download-link">
 											<span className="download-icon">↓</span>
 											{f.name}
 										</a>
@@ -118,8 +124,12 @@ function CyberCard({ event }: CyberCardProps) {
 
 						{/* Particles */}
 						<div className="card-particles">
-							<span></span><span></span><span></span>
-							<span></span><span></span><span></span>
+							<span></span>
+							<span></span>
+							<span></span>
+							<span></span>
+							<span></span>
+							<span></span>
 						</div>
 					</div>
 				</div>
@@ -159,21 +169,61 @@ function CyberCard({ event }: CyberCardProps) {
 					animation: pulse 2s infinite;
 				}
 
-				.tr-1 { top: 10%; left: 10%; animation-delay: 0s; }
-				.tr-2 { top: 10%; right: 10%; animation-delay: 0.2s; }
-				.tr-3 { top: 50%; left: 5%; animation-delay: 0.4s; }
-				.tr-4 { top: 50%; right: 5%; animation-delay: 0.6s; }
-				.tr-5 { bottom: 10%; left: 10%; animation-delay: 0.8s; }
-				.tr-6 { bottom: 10%; right: 10%; animation-delay: 1s; }
-				.tr-7 { top: 30%; left: 30%; animation-delay: 1.2s; }
-				.tr-8 { top: 70%; right: 30%; animation-delay: 1.4s; }
-				.tr-9 { top: 50%; left: 50%; animation-delay: 1.6s; }
+				.tr-1 {
+					top: 10%;
+					left: 10%;
+					animation-delay: 0s;
+				}
+				.tr-2 {
+					top: 10%;
+					right: 10%;
+					animation-delay: 0.2s;
+				}
+				.tr-3 {
+					top: 50%;
+					left: 5%;
+					animation-delay: 0.4s;
+				}
+				.tr-4 {
+					top: 50%;
+					right: 5%;
+					animation-delay: 0.6s;
+				}
+				.tr-5 {
+					bottom: 10%;
+					left: 10%;
+					animation-delay: 0.8s;
+				}
+				.tr-6 {
+					bottom: 10%;
+					right: 10%;
+					animation-delay: 1s;
+				}
+				.tr-7 {
+					top: 30%;
+					left: 30%;
+					animation-delay: 1.2s;
+				}
+				.tr-8 {
+					top: 70%;
+					right: 30%;
+					animation-delay: 1.4s;
+				}
+				.tr-9 {
+					top: 50%;
+					left: 50%;
+					animation-delay: 1.6s;
+				}
 
 				.cyber-card {
 					position: relative;
 					width: 100%;
 					min-height: 320px;
-					background: linear-gradient(135deg, rgba(10, 25, 47, 0.9) 0%, rgba(16, 37, 60, 0.95) 100%);
+					background: linear-gradient(
+						135deg,
+						rgba(10, 25, 47, 0.9) 0%,
+						rgba(16, 37, 60, 0.95) 100%
+					);
 					border-radius: 16px;
 					padding: 1.5rem;
 					transform-style: preserve-3d;
@@ -220,7 +270,12 @@ function CyberCard({ event }: CyberCardProps) {
 
 				.cyber-lines span {
 					position: absolute;
-					background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.5), transparent);
+					background: linear-gradient(
+						90deg,
+						transparent,
+						rgba(0, 255, 255, 0.5),
+						transparent
+					);
 					animation: scan 4s linear infinite;
 				}
 
@@ -262,7 +317,12 @@ function CyberCard({ event }: CyberCardProps) {
 					left: 0;
 					width: 100%;
 					height: 2px;
-					background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.8), transparent);
+					background: linear-gradient(
+						90deg,
+						transparent,
+						rgba(0, 255, 255, 0.8),
+						transparent
+					);
 					animation: scanVertical 3s linear infinite;
 					z-index: 4;
 				}
@@ -356,7 +416,9 @@ function CyberCard({ event }: CyberCardProps) {
 					z-index: 2;
 				}
 
-				.glow-1, .glow-2, .glow-3 {
+				.glow-1,
+				.glow-2,
+				.glow-3 {
 					position: absolute;
 					border-radius: 50%;
 					filter: blur(40px);
@@ -461,15 +523,40 @@ function CyberCard({ event }: CyberCardProps) {
 					animation: float 6s ease-in-out infinite;
 				}
 
-				.card-particles span:nth-child(1) { top: 10%; left: 20%; animation-delay: 0s; }
-				.card-particles span:nth-child(2) { top: 30%; left: 80%; animation-delay: 1s; }
-				.card-particles span:nth-child(3) { top: 50%; left: 40%; animation-delay: 2s; }
-				.card-particles span:nth-child(4) { top: 70%; left: 70%; animation-delay: 3s; }
-				.card-particles span:nth-child(5) { top: 80%; left: 30%; animation-delay: 4s; }
-				.card-particles span:nth-child(6) { top: 20%; left: 60%; animation-delay: 5s; }
+				.card-particles span:nth-child(1) {
+					top: 10%;
+					left: 20%;
+					animation-delay: 0s;
+				}
+				.card-particles span:nth-child(2) {
+					top: 30%;
+					left: 80%;
+					animation-delay: 1s;
+				}
+				.card-particles span:nth-child(3) {
+					top: 50%;
+					left: 40%;
+					animation-delay: 2s;
+				}
+				.card-particles span:nth-child(4) {
+					top: 70%;
+					left: 70%;
+					animation-delay: 3s;
+				}
+				.card-particles span:nth-child(5) {
+					top: 80%;
+					left: 30%;
+					animation-delay: 4s;
+				}
+				.card-particles span:nth-child(6) {
+					top: 20%;
+					left: 60%;
+					animation-delay: 5s;
+				}
 
 				@keyframes pulse {
-					0%, 100% {
+					0%,
+					100% {
 						opacity: 0.5;
 						transform: scale(1);
 					}
@@ -508,7 +595,8 @@ function CyberCard({ event }: CyberCardProps) {
 				}
 
 				@keyframes glow {
-					0%, 100% {
+					0%,
+					100% {
 						opacity: 0.2;
 						transform: scale(1);
 					}
@@ -519,7 +607,8 @@ function CyberCard({ event }: CyberCardProps) {
 				}
 
 				@keyframes float {
-					0%, 100% {
+					0%,
+					100% {
 						transform: translateY(0px) translateX(0px);
 						opacity: 0.3;
 					}
@@ -534,9 +623,10 @@ function CyberCard({ event }: CyberCardProps) {
 }
 
 export default function Peer2PeerPage() {
-const getThemeStyles = () => {
 	const { theme } = useTheme();
-		switch(theme) {
+
+	const getThemeStyles = () => {
+		switch (theme) {
 			case 'acqua':
 				return {
 					mainGradient: 'bg-gradient-to-r from-sky-950 via-blue-950 to-sky-900',
@@ -544,40 +634,45 @@ const getThemeStyles = () => {
 					border: 'border-sky-900',
 					highlight: 'bg-sky-800 text-sky-100',
 					button: 'bg-sky-700 hover:bg-sky-600 text-white',
-					secondaryButton: 'bg-transparent border border-sky-700 text-sky-100 hover:bg-sky-900',
+					secondaryButton:
+						'bg-transparent border border-sky-700 text-sky-100 hover:bg-sky-900',
 					activeTab: 'bg-sky-700 text-white',
 					inactiveTab: 'text-sky-100 hover:bg-sky-900',
 					textColor: 'text-sky-100',
 					textMuted: 'text-gray-400',
-					link: 'text-sky-400 hover:text-sky-300'
+					link: 'text-sky-400 hover:text-sky-300',
 				};
 			case 'fuoco':
 				return {
-					mainGradient: 'bg-gradient-to-r from-red-950 via-orange-950 to-red-900',
+					mainGradient:
+						'bg-gradient-to-r from-red-950 via-orange-950 to-red-900',
 					cardBg: 'bg-slate-900',
 					border: 'border-red-900',
 					highlight: 'bg-red-800 text-red-100',
 					button: 'bg-red-700 hover:bg-red-600 text-white',
-					secondaryButton: 'bg-transparent border border-red-700 text-red-100 hover:bg-red-900',
+					secondaryButton:
+						'bg-transparent border border-red-700 text-red-100 hover:bg-red-900',
 					activeTab: 'bg-red-700 text-white',
 					inactiveTab: 'text-red-100 hover:bg-red-900',
 					textColor: 'text-red-100',
 					textMuted: 'text-gray-400',
-					link: 'text-red-400 hover:text-red-300'
+					link: 'text-red-400 hover:text-red-300',
 				};
 			case 'erba':
 				return {
-					mainGradient: 'bg-gradient-to-r from-green-950 via-emerald-950 to-green-900',
+					mainGradient:
+						'bg-gradient-to-r from-green-950 via-emerald-950 to-green-900',
 					cardBg: 'bg-slate-900',
 					border: 'border-green-900',
 					highlight: 'bg-green-800 text-green-100',
 					button: 'bg-green-700 hover:bg-green-600 text-white',
-					secondaryButton: 'bg-transparent border border-green-700 text-green-100 hover:bg-green-900',
+					secondaryButton:
+						'bg-transparent border border-green-700 text-green-100 hover:bg-green-900',
 					activeTab: 'bg-green-700 text-white',
 					inactiveTab: 'text-green-100 hover:bg-green-900',
 					textColor: 'text-green-100',
 					textMuted: 'text-gray-400',
-					link: 'text-green-400 hover:text-green-300'
+					link: 'text-green-400 hover:text-green-300',
 				};
 			default:
 				return {
@@ -586,12 +681,13 @@ const getThemeStyles = () => {
 					border: 'border-sky-900',
 					highlight: 'bg-sky-800 text-sky-100',
 					button: 'bg-sky-700 hover:bg-sky-600 text-white',
-					secondaryButton: 'bg-transparent border border-sky-700 text-sky-100 hover:bg-sky-900',
+					secondaryButton:
+						'bg-transparent border border-sky-700 text-sky-100 hover:bg-sky-900',
 					activeTab: 'bg-sky-700 text-white',
 					inactiveTab: 'text-sky-100 hover:bg-sky-900',
 					textColor: 'text-sky-100',
 					textMuted: 'text-gray-400',
-					link: 'text-sky-400 hover:text-sky-300'
+					link: 'text-sky-400 hover:text-sky-300',
 				};
 		}
 	};
@@ -601,38 +697,27 @@ const getThemeStyles = () => {
 	// Mostriamo solo eventi di tipo 'workshop'
 	const workshopEvents = events.filter((e) => e.type === 'workshop');
 
-	const downloadJson = (event: AppEvent) => {
-		const dataStr = JSON.stringify(event, null, 2);
-		const blob = new Blob([dataStr], { type: 'application/json' });
-		const url = URL.createObjectURL(blob);
-		const a = document.createElement('a');
-		a.href = url;
-		a.download = `evento-${event.id ?? 'data'}.json`;
-		document.body.appendChild(a);
-		a.click();
-		a.remove();
-		URL.revokeObjectURL(url);
-	};
-
 	return (
 		<div className={`min-h-screen ${styles.mainGradient} pt-8 pb-16`}>
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 				<header className="mb-6">
 					<h1 className="text-3xl font-bold">Peer2Peer</h1>
 					<p className="mt-2 text-lg text-slate-300">
-						Benvenuto nella pagina Peer2Peer. Qui puoi consultare gli eventi disponibili
-						e scaricare i materiali o i dettagli degli eventi per condividerli con i tuoi
-						compagni.
+						Benvenuto nella pagina Peer2Peer. Qui puoi consultare gli eventi
+						disponibili e scaricare i materiali o i dettagli degli eventi per
+						condividerli con i tuoi compagni.
 					</p>
 				</header>
 
-				<section aria-label="Lista eventi" className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+				<section
+					aria-label="Lista eventi"
+					className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 					{workshopEvents.length === 0 ? (
-						<p className="text-slate-400 col-span-full">Nessun workshop disponibile al momento.</p>
+						<p className="text-slate-400 col-span-full">
+							Nessun workshop disponibile al momento.
+						</p>
 					) : (
-						workshopEvents.map((ev) => (
-							<CyberCard key={ev.id} event={ev} />
-						))
+						workshopEvents.map((ev) => <CyberCard key={ev.id} event={ev} />)
 					)}
 				</section>
 			</div>
