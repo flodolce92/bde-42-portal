@@ -340,7 +340,7 @@ export default function Home() {
 						</p>
 						<div className="flex flex-wrap gap-4">
 							<Link
-								href="/eventi/special-event"
+								href="/events/special-event"
 								className={`font-medium px-6 py-3 rounded-lg shadow-md ${styles.button} transition-colors`}>
 								Scopri di più
 							</Link>
@@ -378,7 +378,7 @@ export default function Home() {
 								</p>
 								<div className="mt-4">
 									<Link
-										href="/classifica"
+										href="/leaderboard"
 										className={`text-sm font-medium ${styles.link}`}>
 										Visualizza la classifica completa →
 									</Link>
@@ -399,7 +399,7 @@ export default function Home() {
 			<section className="mb-16">
 				<div className="flex justify-between items-center mb-6">
 					<h2 className="text-2xl font-bold">Eventi in evidenza</h2>
-					<Link href="/eventi" className={styles.link}>
+					<Link href="/events" className={styles.link}>
 						Vedi tutti gli eventi
 					</Link>
 				</div>
@@ -437,7 +437,7 @@ export default function Home() {
 										<span>{event.time}</span>
 									</div>
 									<Link
-										href={`/eventi/${event.id}`}
+										href={`/events/${event.id}`}
 										className={`inline-block px-3 py-1 rounded-md text-sm font-medium ${styles.button}`}>
 										Dettagli
 									</Link>
@@ -451,7 +451,7 @@ export default function Home() {
 			<section className="mb-16">
 				<div className="flex justify-between items-center mb-6">
 					<h2 className="text-2xl font-bold">Classifica</h2>
-					<Link href="/classifica" className={styles.link}>
+					<Link href="/leaderboard" className={styles.link}>
 						Classifica completa
 					</Link>
 				</div>

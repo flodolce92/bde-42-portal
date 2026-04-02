@@ -306,7 +306,7 @@ export default function EventDetail({
 					L&apos evento che stai cercando non esiste o è stato rimosso.
 				</p>
 				<Link
-					href="/eventi"
+					href="/events"
 					className={`px-6 py-3 rounded-lg ${getButtonClass()}`}>
 					Torna agli eventi
 				</Link>
@@ -319,7 +319,7 @@ export default function EventDetail({
 			className={`container mx-auto px-4 py-8 mt-16 ${themeStyles.textDefault}`}>
 			<div className="mb-4">
 				<Link
-					href="/eventi"
+					href="/events"
 					className={`flex items-center ${themeStyles.textDefault} hover:opacity-75`}>
 					<svg
 						className="w-5 h-5 mr-1"

@@ -8,7 +8,7 @@ import { mockEvents } from './mockEvents';
 
 type FilterType = 'all' | 'coding' | 'ctf' | 'quiz' | 'hackathon' | 'workshop';
 
-export default function EventiPage() {
+export default function EventsPage() {
 	const { theme } = useTheme();
 	const { currentUser } = useAppStore();
 	const [events, setEvents] = useState<Event[]>([]);

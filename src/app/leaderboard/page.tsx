@@ -81,7 +81,7 @@ const mockLeaderboard: User[] = [
 type SortBy = 'score' | 'coding' | 'security' | 'algorithms';
 type FilterTeam = 'all' | Team;
 
-export default function ClassificaPage() {
+export default function LeaderboardPage() {
 	const { theme } = useTheme();
 	const { currentUser } = useAppStore();
 	const [leaderboard, setLeaderboard] = useState<User[]>([]);

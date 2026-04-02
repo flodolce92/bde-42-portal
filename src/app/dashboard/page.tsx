@@ -505,7 +505,7 @@ export default function Dashboard() {
 														<span className="text-sm">{event.time}</span>
 													</div>
 													<a
-														href={`/eventi/${event.id}`}
+														href={`/events/${event.id}`}
 														className={`${styles.buttonBg} ${styles.buttonText} text-sm px-3 py-1 rounded-md hover:shadow-md transition-shadow`}>
 														Dettagli
 													</a>
@@ -556,7 +556,7 @@ export default function Dashboard() {
 								</div>
 								<div className="mt-4 text-center">
 									<a
-										href="/classifica"
+										href="/leaderboard"
 										className={`${styles.buttonBg} ${styles.buttonText} inline-block px-4 py-2 rounded-md hover:shadow-md transition-shadow`}>
 										Classifica completa
 									</a>

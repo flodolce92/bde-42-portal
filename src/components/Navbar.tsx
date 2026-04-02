@@ -92,7 +92,7 @@ export default function Navbar() {
 									Dashboard
 								</Link>
 								<Link
-									href="/eventi"
+									href="/events"
 									className="px-4 py-2 text-lg font-medium border-b-2 border-transparent hover:border-white text-white">
 									Eventi
 								</Link>
@@ -255,7 +255,7 @@ export default function Navbar() {
 							Dashboard
 						</Link>
 						<Link
-							href="/eventi"
+							href="/events"
 							className="block pl-3 pr-4 py-2 border-l-4 text-base font-medium border-transparent text-white hover:bg-white hover:bg-opacity-10 hover:border-white"
 							onClick={() => setMobileMenuOpen(false)}>
 							Eventi

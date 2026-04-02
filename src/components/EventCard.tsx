@@ -307,7 +307,7 @@ export default function EventCard({
 
 				<div className="flex justify-between mt-4">
 					<Link
-						href={`/eventi/${id}`}
+						href={`/events/${id}`}
 						className={`px-4 py-2 rounded text-sm font-medium transition-colors ${
 							darkMode
 								? `${teamButtonColor} text-white`
