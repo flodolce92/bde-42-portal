@@ -5,6 +5,7 @@ import { useTheme } from '@/hooks/useTheme';
 import { useAppStore, Event, User } from '@/store';
 import Link from 'next/link';
 import Image from 'next/image';
+import { mockEvents } from '../mockEvents';
 
 const mockParticipants: User[] = [
 	{
